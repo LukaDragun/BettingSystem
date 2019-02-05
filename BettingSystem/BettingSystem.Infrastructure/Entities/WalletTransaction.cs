@@ -8,7 +8,7 @@ namespace BettingSystem.Common.Infrastructure.Entities
 
         public float TransactionValue { get; set; }
         public TransactionType TransactionType { get; set; }
-
+        public int? BetId { get; set; }
 
         public virtual Bet Bet { get; set; }
     }

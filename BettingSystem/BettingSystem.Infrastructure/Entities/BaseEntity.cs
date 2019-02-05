@@ -4,8 +4,8 @@ namespace BettingSystem.Common.Infrastructure.Entities
 {
     public class BaseEntity
     {
-        private int Id { get; set; }
-        private DateTime CreatedDateTime { get; set; }
-        private DateTime UpdatedDateTime { get; set; }
+        public int Id { get; set; }
+        public DateTime CreatedDateTime { get; set; }
+        public DateTime UpdatedDateTime { get; set; }
     }
 }

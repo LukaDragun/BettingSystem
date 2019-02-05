@@ -1,13 +1,12 @@
 ﻿using BettingSystem.Common.Infrastructure.Entities;
-using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration.Conventions;
+using Microsoft.EntityFrameworkCore;
 
 namespace BettingSystem.Common.Infrastructure.DatabaseContext
 {
     public class BettingSystemDatabaseContext : DbContext
     {
 
-        public BettingSystemDatabaseContext() : base("BettingSystemContext")
+        public BettingSystemDatabaseContext(DbContextOptions<BettingSystemDatabaseContext> options) : base(options)
         {
         }
 
@@ -16,11 +15,10 @@ namespace BettingSystem.Common.Infrastructure.DatabaseContext
         public DbSet<Game> Games { get; set; }
         public DbSet<WalletTransaction> WalletTransactions { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Entity<Coefficient>().HasKey(c => new { c.Id, c.BetType });
-            modelBuilder.Entity<WalletTransaction>().HasOptional(o => o.Bet).WithRequired(r => r.Transaction);
+            modelBuilder.Entity<WalletTransaction>().HasOne(o => o.Bet).WithOne(r => r.Transaction).HasForeignKey<WalletTransaction>(wt => wt.BetId).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

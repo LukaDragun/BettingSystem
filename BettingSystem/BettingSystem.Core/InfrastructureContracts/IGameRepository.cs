@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BettingSystem.Core.InfrastructureContracts
 {
-    public interface IGameRepository
+    public interface IGameRepository : IBaseDomainRepository<BaseDomainModel>
     {
     }
 }

@@ -1,4 +1,5 @@
-﻿using BettingSystem.Common.Infrastructure.Entities;
+﻿using BettingSystem.Common.Infrastructure.DatabaseContext;
+using BettingSystem.Common.Infrastructure.Entities;
 using BettingSystem.Core.DomainModels;
 using BettingSystem.Core.InfrastructureContracts;
 
@@ -6,6 +7,11 @@ namespace BettingSystem.Infrastructure.Repositories
 {
     public class GameRepository : BaseRepository<BaseDomainModel, Game> , IGameRepository
     {
+        public GameRepository(BettingSystemDatabaseContext context) : base(context)
+        {
+
+        }
+
         protected override Game ToEntity(BaseDomainModel domainModel)
         {
             return new Game

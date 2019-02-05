@@ -1,8 +1,12 @@
+using BettingSystem.Common.Infrastructure.DatabaseContext;
+using BettingSystem.Core.InfrastructureContracts;
+using BettingSystem.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -21,6 +25,10 @@ namespace BettingSystem
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddSingleton<IGameRepository, GameRepository>();
+            var connection = "Data Source=blogging.db";
+            services.AddDbContext<BettingSystemDatabaseContext>
+                (options => options.UseSqlServer(connection));
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

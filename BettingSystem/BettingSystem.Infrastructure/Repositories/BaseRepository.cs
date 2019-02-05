@@ -2,11 +2,9 @@
 using BettingSystem.Common.Infrastructure.Entities;
 using BettingSystem.Core.DomainModels;
 using BettingSystem.Core.InfrastructureContracts;
+using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Text;
 
 namespace BettingSystem.Infrastructure
 {
@@ -15,11 +13,6 @@ namespace BettingSystem.Infrastructure
         where TEntity : BaseEntity
         {
         private readonly BettingSystemDatabaseContext context;
-
-        public BaseRepository()
-        {
-            this.context = new BettingSystemDatabaseContext();
-        }
 
         internal BaseRepository(BettingSystemDatabaseContext context)
         {
