@@ -19,7 +19,7 @@ namespace BettingSystem.Common.Infrastructure.DatabaseContext
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-            modelBuilder.Entity<Coefficient>().HasKey(c => new { c.GameID, c.BetType });
+            modelBuilder.Entity<Coefficient>().HasKey(c => new { c.Id, c.BetType });
             modelBuilder.Entity<WalletTransaction>().HasOptional(o => o.Bet).WithRequired(r => r.Transaction);
         }
     }

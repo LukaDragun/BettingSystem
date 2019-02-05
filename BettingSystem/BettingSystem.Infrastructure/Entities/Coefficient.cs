@@ -5,9 +5,10 @@ using System.Text;
 
 namespace BettingSystem.Common.Infrastructure.Entities
 {
-    public class Coefficient
+    public class Coefficient : BaseEntity
     {
-        public int GameID { get; set; }
+        public Coefficient() { }
+
         public BetType BetType { get; set; }
         public float CoefficientValue { get; set; }
 

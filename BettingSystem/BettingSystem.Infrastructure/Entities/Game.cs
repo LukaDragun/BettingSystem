@@ -5,9 +5,10 @@ using System.Text;
 
 namespace BettingSystem.Common.Infrastructure.Entities
 {
-    public class Game
+    public class Game : BaseEntity
     {
-        public int GameID { get; set; }
+        public Game() { }
+
         public SportType GameType { get; set; } 
         public string FirstTeamName { get; set; }
         public string SecondTeamName { get; set; }

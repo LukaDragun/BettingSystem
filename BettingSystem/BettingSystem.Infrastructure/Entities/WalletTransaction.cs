@@ -2,9 +2,10 @@
 
 namespace BettingSystem.Common.Infrastructure.Entities
 {
-    public class WalletTransaction
+    public class WalletTransaction : BaseEntity
     {
-        public int TransactionId { get; set; }
+        public WalletTransaction() { }
+
         public float TransactionValue { get; set; }
         public TransactionType TransactionType { get; set; }
 
