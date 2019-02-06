@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BettingSystem.Common.Infrastructure.Entities
+namespace BettingSystem.Infrastructure.Entities
 {
     public class BaseEntity
     {

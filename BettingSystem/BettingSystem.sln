@@ -5,9 +5,11 @@ VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BettingSystem.WebApp", "BettingSystem.WebApp\BettingSystem.WebApp.csproj", "{6728EEFB-C9E2-439E-A727-4F15AD6D57BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BettingSystem.Core", "BettingSystem.Core\BettingSystem.Core.csproj", "{ECFD1AAE-EA74-44A5-AFC6-7E7D8358C4C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BettingSystem.Core", "BettingSystem.Core\BettingSystem.Core.csproj", "{ECFD1AAE-EA74-44A5-AFC6-7E7D8358C4C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BettingSystem.Infrastructure", "BettingSystem.Infrastructure\BettingSystem.Infrastructure.csproj", "{3106DE5A-1124-4D84-8C53-C5900951B662}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BettingSystem.Infrastructure", "BettingSystem.Infrastructure\BettingSystem.Infrastructure.csproj", "{3106DE5A-1124-4D84-8C53-C5900951B662}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BettingSystem.Hangfire", "BettingSystem.Hangfire\BettingSystem.Hangfire.csproj", "{72621F2B-1A32-4DA9-8C73-46B9F1015A9C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{3106DE5A-1124-4D84-8C53-C5900951B662}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3106DE5A-1124-4D84-8C53-C5900951B662}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3106DE5A-1124-4D84-8C53-C5900951B662}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72621F2B-1A32-4DA9-8C73-46B9F1015A9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72621F2B-1A32-4DA9-8C73-46B9F1015A9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72621F2B-1A32-4DA9-8C73-46B9F1015A9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72621F2B-1A32-4DA9-8C73-46B9F1015A9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,4 @@
-﻿using BettingSystem.Common.Infrastructure.Entities;
+﻿using BettingSystem.Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace BettingSystem.Common.Infrastructure.DatabaseContext
@@ -17,8 +17,12 @@ namespace BettingSystem.Common.Infrastructure.DatabaseContext
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Coefficient>().HasKey(c => new { c.Id, c.BetType });
-            modelBuilder.Entity<WalletTransaction>().HasOne(o => o.Bet).WithOne(r => r.Transaction).HasForeignKey<WalletTransaction>(wt => wt.BetId).OnDelete(DeleteBehavior.Restrict);
-        }
+            modelBuilder.Entity<WalletTransaction>().HasOne(o => o.Bet).WithOne(r => r.Transaction).HasForeignKey<WalletTransaction>(wt => wt.BetId);
+            modelBuilder.Entity<Coefficient>().HasOne(c => c.Game).WithMany(g => g.Coefficients).IsRequired();
+
+            modelBuilder.Entity<BetCoefficient>().HasKey(bc => new { bc.BetId, bc.CoefficientId });
+            modelBuilder.Entity<BetCoefficient>().HasOne(bc => bc.Coefficient).WithMany(b => b.BetCoefficients).HasForeignKey(bc => bc.CoefficientId);
+            modelBuilder.Entity<BetCoefficient>().HasOne(bc => bc.Bet).WithMany(c => c.BetCoefficients).HasForeignKey(bc => bc.BetId);
+    }
     }
 }

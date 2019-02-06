@@ -1,9 +1,9 @@
 using BettingSystem.Common.Infrastructure.DatabaseContext;
 using BettingSystem.Core.InfrastructureContracts;
+using BettingSystem.Hangfire;
 using BettingSystem.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
@@ -24,11 +24,12 @@ namespace BettingSystem
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = Configuration["ConnectionString"];
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddSingleton<IGameRepository, GameRepository>();
-            var connection = "Data Source=blogging.db";
-            services.AddDbContext<BettingSystemDatabaseContext>
-                (options => options.UseSqlServer(connection));
+            services.AddScoped<IGameRepository, GameRepository>();      
+            services.AddDbContext<BettingSystemDatabaseContext>(options => options.UseSqlServer(connectionString));
+            services.SetupHangfireServices(connectionString);
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -50,6 +51,7 @@ namespace BettingSystem
                 app.UseHsts();
             }
 
+            app.ConfigureHangfire();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();

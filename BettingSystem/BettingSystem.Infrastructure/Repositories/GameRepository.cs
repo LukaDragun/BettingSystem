@@ -1,5 +1,5 @@
 ﻿using BettingSystem.Common.Infrastructure.DatabaseContext;
-using BettingSystem.Common.Infrastructure.Entities;
+using BettingSystem.Infrastructure.Entities;
 using BettingSystem.Core.DomainModels;
 using BettingSystem.Core.InfrastructureContracts;
 

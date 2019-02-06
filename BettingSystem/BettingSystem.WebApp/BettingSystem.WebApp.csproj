@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BettingSystem.Hangfire\BettingSystem.Hangfire.csproj" />
     <ProjectReference Include="..\BettingSystem.Infrastructure\BettingSystem.Infrastructure.csproj" />
   </ItemGroup>
 
