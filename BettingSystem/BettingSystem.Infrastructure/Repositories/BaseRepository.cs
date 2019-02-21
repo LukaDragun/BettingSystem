@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace BettingSystem.Infrastructure
 {
-    public abstract class BaseRepository<TDomainModel , TEntity> : IBaseDomainRepository<TDomainModel>, IDisposable
+    public abstract class BaseRepository<TDomainModel , TEntity> : IBaseRepository<TDomainModel>, IDisposable
         where TDomainModel : BaseDomainModel
         where TEntity : BaseEntity
         {
@@ -39,13 +39,6 @@ namespace BettingSystem.Infrastructure
             context.SaveChanges();
         }
 
-        public TDomainModel GetById(int id)
-        {
-            var entity = context.Set<TEntity>().Where(e => e.Id == id).FirstOrDefault();
-
-            return ToDomainModel(entity);
-        }
-
         public void Update(TDomainModel domainModel)
         {
             domainModel.SetUpdateDateTime();
@@ -55,7 +48,6 @@ namespace BettingSystem.Infrastructure
         }
 
         protected abstract TEntity ToEntity(TDomainModel domainModel);
-        protected abstract TDomainModel ToDomainModel(TEntity Entity);
 
     }
 }

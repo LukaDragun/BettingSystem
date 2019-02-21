@@ -7,6 +7,7 @@ namespace BettingSystem.Common.Core.Enums
     public enum TransactionType
     {
         Deposit = 1,
-        Bet = 2
+        Bet = 2,
+        Win = 3
     }
 }
