@@ -8,7 +8,6 @@ namespace BettingSystem.Infrastructure.Entities
     {
         public Bet() { }
 
-
         public WalletTransaction Transaction { get; set; }
         public ICollection<BetCoefficient> BetCoefficients { get; set; }
     }

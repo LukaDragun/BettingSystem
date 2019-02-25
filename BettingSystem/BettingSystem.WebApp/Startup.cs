@@ -1,12 +1,11 @@
-using BettingSystem.Common.Infrastructure.DatabaseContext;
-using BettingSystem.Core.InfrastructureContracts;
+using BettingSystem.Core;
+using BettingSystem.Core.ApplicationServices;
 using BettingSystem.Hangfire;
-using BettingSystem.Infrastructure.Repositories;
+using BettingSystem.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -27,9 +26,10 @@ namespace BettingSystem
             var connectionString = Configuration["ConnectionString"];
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddScoped<IGameRepository, GameRepository>();      
-            services.AddDbContext<BettingSystemDatabaseContext>(options => options.UseSqlServer(connectionString));
+
             services.SetupHangfireServices(connectionString);
+            services.InitializeCoreServices();
+            services.InitializeInfrastructure(connectionString);
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -39,7 +39,7 @@ namespace BettingSystem
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, GameService gameService)
         {
             if (env.IsDevelopment())
             {
@@ -51,7 +51,7 @@ namespace BettingSystem
                 app.UseHsts();
             }
 
-            app.ConfigureHangfire();
+            app.ConfigureHangfire(gameService);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();

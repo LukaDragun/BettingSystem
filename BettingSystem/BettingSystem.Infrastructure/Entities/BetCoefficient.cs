@@ -6,6 +6,8 @@ namespace BettingSystem.Infrastructure.Entities
 {
     public class BetCoefficient
     {
+        public BetCoefficient() { }
+
         public int BetId { get; set; }
         public Bet Bet { get; set; }
         public int CoefficientId { get; set; }

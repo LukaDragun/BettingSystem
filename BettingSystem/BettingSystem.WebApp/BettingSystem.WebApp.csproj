@@ -16,7 +16,6 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BettingSystem.Core\BettingSystem.Core.csproj" />
     <ProjectReference Include="..\BettingSystem.Hangfire\BettingSystem.Hangfire.csproj" />
     <ProjectReference Include="..\BettingSystem.Infrastructure\BettingSystem.Infrastructure.csproj" />
   </ItemGroup>

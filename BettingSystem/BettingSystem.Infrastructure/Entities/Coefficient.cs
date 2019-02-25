@@ -12,6 +12,7 @@ namespace BettingSystem.Infrastructure.Entities
         public BetType BetType { get; set; }
         public float CoefficientValue { get; set; }
 
+        public int GameId { get; set; }
         public Game Game { get; set; }
         public ICollection<BetCoefficient> BetCoefficients { get; set; }
     }

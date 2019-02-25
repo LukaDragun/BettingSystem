@@ -1,17 +1,18 @@
 ﻿using BettingSystem.Common.Infrastructure.DatabaseContext;
 using BettingSystem.Infrastructure.Entities;
 using BettingSystem.Core.DomainModels;
-using BettingSystem.Core.InfrastructureContracts;
+using BettingSystem.Core.BaseInterfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace BettingSystem.Infrastructure
 {
-    public abstract class BaseRepository<TDomainModel , TEntity> : IBaseRepository<TDomainModel>, IDisposable
+    public abstract class BaseRepository<TDomainModel, TEntity> : IRepository<TDomainModel>
         where TDomainModel : BaseDomainModel
-        where TEntity : BaseEntity
-        {
+        where TEntity : BaseEntity , new()
+    {
         private readonly BettingSystemDatabaseContext context;
 
         internal BaseRepository(BettingSystemDatabaseContext context)
@@ -19,16 +20,26 @@ namespace BettingSystem.Infrastructure
             this.context = context;
         }
 
-        public void Dispose()
-        {
-            this.Dispose();
-        }
-
         public void Create(TDomainModel domainModel)
         {
             domainModel.SetCreateDateTime();
-            var entity = ToEntity(domainModel);
-            context.Entry(entity).State = EntityState.Added;
+            var entity = new TEntity();
+            entity = CopyDomainModelToEntity(ref entity, domainModel);
+            context.Add(entity);
+            context.SaveChanges();
+        }
+
+        public void CreateMany(ICollection<TDomainModel> domainModels)
+        {
+            var entities = new List<TEntity>();
+
+            foreach(var domainModel in domainModels) {
+                domainModel.SetCreateDateTime();
+                var entity = new TEntity();
+                entity = CopyDomainModelToEntity(ref entity, domainModel);
+                entities.Add(entity);
+            }
+            context.AddRange(entities);
             context.SaveChanges();
         }
 
@@ -42,12 +53,13 @@ namespace BettingSystem.Infrastructure
         public void Update(TDomainModel domainModel)
         {
             domainModel.SetUpdateDateTime();
-            var entity = ToEntity(domainModel);
+            var entity = context.Set<TEntity>().FirstOrDefault(e => e.Id == domainModel.Id);
+            entity = CopyDomainModelToEntity(ref entity, domainModel);
             context.Entry(entity).State = EntityState.Modified;
             context.SaveChanges();
         }
 
-        protected abstract TEntity ToEntity(TDomainModel domainModel);
+        protected abstract TEntity CopyDomainModelToEntity(ref TEntity entity, TDomainModel domainModel);
 
     }
 }

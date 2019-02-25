@@ -18,11 +18,11 @@ namespace BettingSystem.Common.Infrastructure.DatabaseContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<WalletTransaction>().HasOne(o => o.Bet).WithOne(r => r.Transaction).HasForeignKey<WalletTransaction>(wt => wt.BetId);
-            modelBuilder.Entity<Coefficient>().HasOne(c => c.Game).WithMany(g => g.Coefficients).IsRequired();
+            modelBuilder.Entity<Coefficient>().HasOne(c => c.Game).WithMany(g => g.Coefficients).HasForeignKey(g => g.GameId).IsRequired();
 
             modelBuilder.Entity<BetCoefficient>().HasKey(bc => new { bc.BetId, bc.CoefficientId });
             modelBuilder.Entity<BetCoefficient>().HasOne(bc => bc.Coefficient).WithMany(b => b.BetCoefficients).HasForeignKey(bc => bc.CoefficientId);
             modelBuilder.Entity<BetCoefficient>().HasOne(bc => bc.Bet).WithMany(c => c.BetCoefficients).HasForeignKey(bc => bc.BetId);
-    }
+        }
     }
 }

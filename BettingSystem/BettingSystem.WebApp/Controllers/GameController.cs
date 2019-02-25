@@ -1,6 +1,7 @@
-﻿using BettingSystem.Core.DomainModels;
-using BettingSystem.Core.InfrastructureContracts;
+﻿using BettingSystem.Core.InfrastructureContracts.Queries;
+using BettingSystem.Core.Views;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace BettingSystem.WebApp.Controllers
 {
@@ -8,16 +9,16 @@ namespace BettingSystem.WebApp.Controllers
     [Route("api/game")]
     public class GameController : Controller
     {
-        private readonly IGameRepository gameRepository;
-        public GameController(IGameRepository gameRepository)
+        private readonly IGameQuery gameQuery;
+        public GameController(IGameQuery gameQuery)
         {
-            this.gameRepository = gameRepository;
+            this.gameQuery = gameQuery;
         }
 
         [HttpGet("")]
-        public ActionResult<BaseDomainModel> GetAllGames()
+        public ActionResult<GameView[]> GetAllGames()
         {
-            return gameRepository.GetById(3);
+            return gameQuery.WhereUnresolved().Project().ToArray();
         }
     }
 }

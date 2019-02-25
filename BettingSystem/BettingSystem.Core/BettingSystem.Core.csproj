@@ -1,11 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <FileUpgradeFlags>40</FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ApplicationServices\" />
   </ItemGroup>
-
 </Project>

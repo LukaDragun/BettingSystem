@@ -1,7 +1,7 @@
-﻿using Hangfire;
+﻿using BettingSystem.Core.ApplicationServices;
+using Hangfire;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace BettingSystem.Hangfire
 {
@@ -12,17 +12,17 @@ namespace BettingSystem.Hangfire
             services.AddHangfire(x => x.UseSqlServerStorage(connectionString));         
         }
         
-        public static void ConfigureHangfire(this IApplicationBuilder app)
+        public static void ConfigureHangfire(this IApplicationBuilder app, GameService gameService)
         {
             app.UseHangfireDashboard();
             app.UseHangfireServer();
 
-            SetupHangfireJobs();
+            SetupHangfireJobs(gameService);
         }
 
-        private static void SetupHangfireJobs()
+        private static void SetupHangfireJobs(GameService gameService)
         {
-            //RecurringJob.AddOrUpdate(() => Console.WriteLine("Daily Job"), Cron.Daily);
+            RecurringJob.AddOrUpdate(() => gameService.GenerateAndResolveGames(), Cron.Hourly);
         }
     }
 }

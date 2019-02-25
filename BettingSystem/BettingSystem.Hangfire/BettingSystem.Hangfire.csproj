@@ -8,4 +8,8 @@
     <PackageReference Include="Hangfire" Version="1.6.22" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BettingSystem.Core\BettingSystem.Core.csproj" />
+  </ItemGroup>
+
 </Project>
