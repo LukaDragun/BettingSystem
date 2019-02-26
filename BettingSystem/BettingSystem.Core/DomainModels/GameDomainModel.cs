@@ -29,13 +29,24 @@ namespace BettingSystem.Core.DomainModels
             ErrorCheck();
         }
 
+        public void ResolveWithRandomResult(DateTime dateTimePlayed)
+        {
+            var rand = new Random();
+            FirstTeamScore = rand.Next(1, 7);
+            SecondTeamScore = rand.Next(1, 7);
+            DateTimePlayed = dateTimePlayed;
+            SetUpdateDateTime();
+
+            ErrorCheck();
+        }
+
         private void ErrorCheck()
         {
             if(!DateTimePlayed.HasValue && (FirstTeamScore.HasValue || SecondTeamScore.HasValue))
             throw new Exception("Cannot change score before game is played");
             if (DateTimePlayed.HasValue && DateTimeStarting > DateTimePlayed)
             throw new Exception("Time Played cannot be before starting time");
-            if (Coefficients.GroupBy(e => e.BetType).Any(e => e.Count() >= 2))
+            if (Coefficients != null && Coefficients.GroupBy(e => e.BetType).Any(e => e.Count() >= 2))
             throw new Exception("There cannot be 2 coefficients of same type");
         }
     }

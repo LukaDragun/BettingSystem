@@ -11,20 +11,25 @@ namespace BettingSystem.Infrastructure
 {
     public abstract class BaseRepository<TDomainModel, TEntity> : IRepository<TDomainModel>
         where TDomainModel : BaseDomainModel
-        where TEntity : BaseEntity , new()
+        where TEntity : BaseEntity
     {
-        private readonly BettingSystemDatabaseContext context;
+        protected readonly BettingSystemDatabaseContext context;
 
         internal BaseRepository(BettingSystemDatabaseContext context)
         {
             this.context = context;
         }
 
+        public TDomainModel GetById(int id)
+        {
+            var entity = context.Set<TEntity>().FirstOrDefault(e => e.Id == id);
+            var domainModel = MapEntityToDomainModel(entity);
+            return domainModel;
+        }
+
         public void Create(TDomainModel domainModel)
         {
-            domainModel.SetCreateDateTime();
-            var entity = new TEntity();
-            entity = CopyDomainModelToEntity(ref entity, domainModel);
+            var entity = MapDomainModelToEntity(domainModel);
             context.Add(entity);
             context.SaveChanges();
         }
@@ -34,32 +39,34 @@ namespace BettingSystem.Infrastructure
             var entities = new List<TEntity>();
 
             foreach(var domainModel in domainModels) {
-                domainModel.SetCreateDateTime();
-                var entity = new TEntity();
-                entity = CopyDomainModelToEntity(ref entity, domainModel);
+                var entity = MapDomainModelToEntity(domainModel);
                 entities.Add(entity);
             }
             context.AddRange(entities);
             context.SaveChanges();
         }
 
-        public void Delete(int id)
+        public void UpdateMany(ICollection<TDomainModel> domainModels)
         {
-            var entity = context.Set<TEntity>().FirstOrDefault(e => e.Id == id);
-            context.Entry(entity).State = EntityState.Deleted;
+            var entities = new List<TEntity>();
+
+            foreach (var domainModel in domainModels)
+            {
+                var entity = MapDomainModelToEntity(domainModel);
+                context.Entry(entity).State = EntityState.Modified;
+            }
             context.SaveChanges();
         }
 
         public void Update(TDomainModel domainModel)
         {
-            domainModel.SetUpdateDateTime();
-            var entity = context.Set<TEntity>().FirstOrDefault(e => e.Id == domainModel.Id);
-            entity = CopyDomainModelToEntity(ref entity, domainModel);
+            var entity = MapDomainModelToEntity(domainModel);
             context.Entry(entity).State = EntityState.Modified;
             context.SaveChanges();
         }
 
-        protected abstract TEntity CopyDomainModelToEntity(ref TEntity entity, TDomainModel domainModel);
+        protected abstract TEntity MapDomainModelToEntity(TDomainModel domainModel);
+        protected abstract TDomainModel MapEntityToDomainModel(TEntity entity);
 
     }
 }

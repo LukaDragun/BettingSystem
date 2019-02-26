@@ -55,7 +55,7 @@ namespace BettingSystem.Core.DataGenerators
         {
             Random rand = new Random();
             var time = DateTime.Now;
-            time.AddMinutes(rand.Next(1, 59));
+            time = time.AddMinutes(rand.Next(1, 59));
             return time;
         }
 

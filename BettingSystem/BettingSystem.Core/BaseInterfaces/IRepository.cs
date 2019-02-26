@@ -9,7 +9,7 @@ namespace BettingSystem.Core.BaseInterfaces
     {
         void Create(T domainModel);
         void CreateMany(ICollection<T> domainModels);
-        void Delete(int id);
         void Update(T domainModel);
+        void UpdateMany(ICollection<T> domainModels);
     }
 }

@@ -3,44 +3,66 @@ using BettingSystem.Infrastructure.Entities;
 using BettingSystem.Core.DomainModels;
 using BettingSystem.Core.InfrastructureContracts.Repositories;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BettingSystem.Infrastructure.Repositories
 {
-    public class GameRepository : BaseRepository<GameDomainModel, Game> , IGameRepository
+    public class GameRepository : BaseRepository<GameDomainModel, Game>, IGameRepository
     {
         public GameRepository(BettingSystemDatabaseContext context) : base(context)
         {
 
         }
 
-        protected override Game CopyDomainModelToEntity(ref Game entity, GameDomainModel domainModel)
+        public List<GameDomainModel> GetUnresolvedGames()
         {
-            entity.Id = domainModel.Id;
-            entity.GameType = domainModel.GameType;
-            entity.FirstTeamName = domainModel.FirstTeamName;
-            entity.SecondTeamName = domainModel.SecondTeamName;
-            entity.FirstTeamScore = domainModel.FirstTeamScore;
-            entity.SecondTeamScore = domainModel.SecondTeamScore;
-            entity.DateTimePlayed = domainModel.DateTimePlayed;
-            entity.DateTimeStarting = domainModel.DateTimeStarting;
-            entity.CreatedDateTime = domainModel.CreatedDateTime;
-            entity.UpdatedDateTime = domainModel.UpdatedDateTime;
+            return context.Set<Game>().Where(e => !e.DateTimePlayed.HasValue).Select(e => MapEntityToDomainModel(e)).ToList();
+        }
 
-            entity.Coefficients = new List<Coefficient>();
-
-            foreach (var coeffiecient in domainModel.Coefficients)
+        protected override Game MapDomainModelToEntity(GameDomainModel domainModel)
+        {
+            return new Game
             {
-                var coefficientEntity = new Coefficient()
+                Id = domainModel.Id,
+                GameType = domainModel.GameType,
+                FirstTeamName = domainModel.FirstTeamName,
+                SecondTeamName = domainModel.SecondTeamName,
+                FirstTeamScore = domainModel.FirstTeamScore,
+                SecondTeamScore = domainModel.SecondTeamScore,
+                DateTimePlayed = domainModel.DateTimePlayed,
+                DateTimeStarting = domainModel.DateTimeStarting,
+                CreatedDateTime = domainModel.CreatedDateTime,
+                UpdatedDateTime = domainModel.UpdatedDateTime,
+
+                Coefficients = domainModel.Coefficients?.Select(e => new Coefficient
                 {
-                    GameId = entity.Id,
-                    BetType = coeffiecient.BetType,
-                    CoefficientValue = coeffiecient.CoefficientValue
-                };
+                    BetType = e.BetType,
+                    CoefficientValue = e.CoefficientValue
+                }).ToList()
+            };
+        }
 
-                entity.Coefficients.Add(coefficientEntity);
-            }
+        protected override GameDomainModel MapEntityToDomainModel(Game entity)
+        {
+            return new GameDomainModel
+            {
+                Id = entity.Id,
+                GameType = entity.GameType,
+                FirstTeamName = entity.FirstTeamName,
+                SecondTeamName = entity.SecondTeamName,
+                FirstTeamScore = entity.FirstTeamScore,
+                SecondTeamScore = entity.SecondTeamScore,
+                DateTimePlayed = entity.DateTimePlayed,
+                DateTimeStarting = entity.DateTimeStarting,
+                CreatedDateTime = entity.CreatedDateTime,
+                UpdatedDateTime = entity.UpdatedDateTime,
 
-            return entity;
+                Coefficients = entity.Coefficients?.Select(e => new CoefficientDomainModel
+                {
+                    BetType = e.BetType,
+                    CoefficientValue = e.CoefficientValue
+                }).ToList()
+            };
         }
     }
 }
