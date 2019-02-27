@@ -45,10 +45,10 @@ li.link-active a:focus {
         font-size: 15px;
         margin: 6px;
     }
-    .navbar li a {
+      .navbar li a .navbar li button {
         padding: 10px 16px;
         border-radius: 4px;
-    }
+      }
     .navbar a {
         /* If a menu item's text is too long, truncate it */
         width: 100%;

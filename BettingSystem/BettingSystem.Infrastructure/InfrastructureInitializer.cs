@@ -25,6 +25,8 @@ namespace BettingSystem.Infrastructure
         private static void RegisterRepositories(IServiceCollection services)
         {
             services.AddScoped<IGameRepository, GameRepository>();
+            services.AddScoped<IBetRepository, BetRepository>();
+            services.AddScoped<IWalletTransactionRepository, WalletTransactionRepository>();
         }
 
         private static void RegisterQueries(IServiceCollection services)

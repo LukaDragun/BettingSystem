@@ -18,6 +18,6 @@ namespace BettingSystem.Infrastructure.Entities
         public DateTime? DateTimePlayed { get; set; }
 
 
-        public ICollection<Coefficient> Coefficients { get; set; }
+        public virtual ICollection<Coefficient> Coefficients { get; set; }
     }
 }

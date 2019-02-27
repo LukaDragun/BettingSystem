@@ -10,6 +10,6 @@ namespace BettingSystem.Infrastructure.Entities
         public TransactionType TransactionType { get; set; }
         public int? BetId { get; set; }
 
-        public Bet Bet { get; set; }
+        public virtual Bet Bet { get; set; }
     }
 }

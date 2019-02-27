@@ -4,8 +4,11 @@ namespace BettingSystem.Core.DomainModels
 {
     public class BetDomainModel : BaseDomainModel
     {
-        public BetDomainModel() { }
+        public BetDomainModel() {
 
+        }
+
+        public bool IsResolved { get; set; }
 
         public List<CoefficientDomainModel> Coefficients { get; set; }
     }

@@ -9,8 +9,8 @@ namespace BettingSystem.Infrastructure.Entities
         public BetCoefficient() { }
 
         public int BetId { get; set; }
-        public Bet Bet { get; set; }
+        public virtual Bet Bet { get; set; }
         public int CoefficientId { get; set; }
-        public Coefficient Coefficient { get; set; }
+        public virtual Coefficient Coefficient { get; set; }
     }
 }

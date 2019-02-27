@@ -1,0 +1,45 @@
+﻿using BettingSystem.Common.Core.Enums;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace BettingSystem.Core.DomainModels
+{
+    public class WalletTransactionDomainModel : BaseDomainModel
+    {
+        public WalletTransactionDomainModel()
+        {
+            ErrorCheck();
+        }
+
+        public float TransactionValue { get; set; }
+        public TransactionType TransactionType { get; set; }
+
+        public BetDomainModel Bet { get; set; }
+
+        public void AddBetWithValue(BetDomainModel bet, float value)
+        {
+            if (bet.IsResolved)
+            {
+                TransactionType = TransactionType.Win;
+                TransactionValue = value;
+            }
+            else
+            {
+                TransactionType = TransactionType.Bet;
+                TransactionValue = -value;
+            }
+
+            Bet = bet;
+            ErrorCheck();
+        }
+
+        private void ErrorCheck()
+        {
+            if ((TransactionType == TransactionType.Win || TransactionType == TransactionType.Deposit) && TransactionValue <= 0)
+                throw new Exception("Transaction cannot be zero or negative for Deposit or Win");
+            if (TransactionType == TransactionType.Bet && TransactionValue >= 0)
+                throw new Exception("Transaction cannot be zero or positive for Bet");
+        }
+    }
+}
