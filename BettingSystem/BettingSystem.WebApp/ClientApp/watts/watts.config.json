@@ -1,0 +1,35 @@
+{
+  "WebApiModuleFileName": "../../../BettingSystem.WebApp/bin/Debug/netcoreapp2.1/BettingSystem.WebApp.dll",
+  "GenerateEndpoints": true,
+  "EndpointsSupportCaching": false,
+  "EndpointsOutputDirectory": "./generated",
+  "EndpointsFileName": "endpoints.ts",
+  "EndpointsNamespace": "Endpoints",
+  "EndpointsPrefix": "api",
+  "GenerateService": true,
+  "ServiceOutputDirectory": "./generated",
+  "ServiceFileName": "angular-endpoints.service.ts",
+  "ServiceName": "AngularEndpointsService",
+  "ServiceNamespace": "Endpoints",
+  "ServiceUseAngularNext": "true",
+  "GenerateEnums": true,
+  "EnumsOutputDirectory": "./generated",
+  "EnumsFileName": "enums.ts",
+  "EnumsNamespace": "Enums",
+  "EnumMatches": [
+    {
+      "Match": "BettingSystem.Common.Core.Enums"
+    }
+  ],
+  "GenerateInterfaces": true,
+  "GenerateInterfaceClasses": false,
+  "InterfacesOutputDirectory": "./generated",
+  "InterfacesFileName": "interfaces.ts",
+  "InterfacesNamespace": "Interfaces",
+  "InterfaceMembersInCamelCase": true,
+  "InterfaceMatches": [
+    {
+      "Match": "BettingSystem.Core.Views"
+    }
+  ]
+}

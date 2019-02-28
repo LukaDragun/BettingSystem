@@ -15,7 +15,8 @@ namespace BettingSystem.WebApp.Controllers
             this.gameQuery = gameQuery;
         }
 
-        [HttpGet("")]
+        [HttpGet]
+        [Route("getAll")]
         public ActionResult<GameView[]> GetAllGames()
         {
             return gameQuery.WhereUnresolved().Project().ToArray();
