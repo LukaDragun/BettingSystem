@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Enums } from '../../../watts/generated/enums';
 import { AngularEndpointsService } from '../../../watts/generated/angular-endpoints.service';
+import { Interfaces } from '../../../watts/generated/interfaces';
 
 @Component({
   selector: 'sport-handler',
@@ -25,15 +26,17 @@ export class SportHandlerComponent implements OnInit {
         default:
           this.router.navigate(['']);
       }
+
+      this.endpointsService.Game.GetAllGames({ sportType: this.sportType }).call<Interfaces.IGameOfferView>().then((data) => {
+        this.gamesData = data;
+      })
     });
   }
-  public gameData: null;
+  public gamesData: Interfaces.IGameOfferView =  null;
   public sportType: Enums.SportType = null;
 
   ngOnInit() {
-    this.endpointsService.Game.GetAllGames().call().then((data) => {
-      this.gameData = this.gameData;
-    })
+
   }
 
 }

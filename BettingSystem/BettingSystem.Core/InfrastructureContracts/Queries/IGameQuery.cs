@@ -1,4 +1,5 @@
-﻿using BettingSystem.Core.BaseInterfaces;
+﻿using BettingSystem.Common.Core.Enums;
+using BettingSystem.Core.BaseInterfaces;
 using BettingSystem.Core.Views;
 
 namespace BettingSystem.Core.InfrastructureContracts.Queries
@@ -6,5 +7,8 @@ namespace BettingSystem.Core.InfrastructureContracts.Queries
     public interface IGameQuery : IQuery<GameView>
     {
         IGameQuery WhereUnresolved();
+        IGameQuery WhereSportType(SportType type);
+
+        GameOfferView AsGameOfferView();
     }
 }

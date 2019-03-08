@@ -25,7 +25,7 @@ namespace BettingSystem.Infrastructure.Queries
             return new GameQuery(this, this.inner.Where(e => !e.DateTimePlayed.HasValue));
         }
 
-        public IGameQuery WhereGameType(SportType type)
+        public IGameQuery WhereSportType(SportType type)
         {
             return new GameQuery(this, this.inner.Where(e => e.GameType == type));
         }
@@ -51,6 +51,19 @@ namespace BettingSystem.Infrastructure.Queries
                                           CoefficientValue = coefficient.CoefficientValue
                                       }).ToList()
                    };
+        }
+
+
+
+        public GameOfferView AsGameOfferView()
+        {
+            var games = this.Project().ToArray().OrderBy(e => e.Coefficients.Select(v => v.CoefficientValue).Aggregate(1.0, (x,y) => x * y ));
+
+            return new GameOfferView
+            {
+                BestOffers = games.Take(1).OrderBy(e => e.DateTimeStarting).ToArray(),
+                OtherGames = games.Skip(1).OrderBy(e => e.DateTimeStarting).ToArray()
+            };
         }
     }
 }

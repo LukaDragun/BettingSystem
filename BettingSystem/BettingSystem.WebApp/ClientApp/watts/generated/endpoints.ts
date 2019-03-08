@@ -36,6 +36,7 @@ export namespace Endpoints {
         }
     
         export interface IGetAllGames {
+            sportType?: Enums.SportType;
         }
     
         export interface IGetAllGamesEndpoint extends IGetAllGames, IEndpoint {
@@ -51,10 +52,22 @@ export namespace Endpoints {
     
         export var GetAllGames : IGetAllGamesCtor = <any>(function(args?: IGetAllGames) {
             this._verb = 'GET';
+            this.sportType = args != null ? args.sportType : null;
         });
     
+        GetAllGames.prototype.getQueryString = function(): string {
+            var parameters: string[] = [];
+            addParameter(parameters, 'sportType', this.sportType);
+        
+            if (parameters.length > 0) {
+                return '?' + parameters.join('&');
+            }
+        
+            return '';
+        }
+    
         GetAllGames.prototype.toString = function(): string {
-            return `api/Game/getAll`;
+            return `api/Game` + this.getQueryString();
         }
     }
 }

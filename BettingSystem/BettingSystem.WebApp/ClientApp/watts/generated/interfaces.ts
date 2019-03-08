@@ -6,6 +6,11 @@ export namespace Interfaces {
         coefficientValue: number;
     }
 
+    export interface IGameOfferView {
+        bestOffers: Interfaces.IGameView[];
+        otherGames: Interfaces.IGameView[];
+    }
+
     export interface IGameView {
         id: number;
         firstTeamName: string;

@@ -14,10 +14,10 @@ namespace BettingSystem.Core.ApplicationServices
         }
 
         public void GenerateAndResolveGames() {
-           /* var games = GameDataGenerator.GenerateGames();
-            gameRepository.CreateMany(games);*/
-
             ResolveGames(true);
+
+            var games = GameDataGenerator.GenerateGames();
+            gameRepository.CreateMany(games);
         }
 
         private void ResolveGames(bool resolveAllGames = false) //development test mode

@@ -1,4 +1,5 @@
-﻿using BettingSystem.Core.InfrastructureContracts.Queries;
+﻿using BettingSystem.Common.Core.Enums;
+using BettingSystem.Core.InfrastructureContracts.Queries;
 using BettingSystem.Core.Views;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -16,10 +17,16 @@ namespace BettingSystem.WebApp.Controllers
         }
 
         [HttpGet]
-        [Route("getAll")]
-        public ActionResult<GameView[]> GetAllGames()
+        [Route("")]
+        public ActionResult<GameOfferView> GetAllGames(SportType? sportType = null)
         {
-            return gameQuery.WhereUnresolved().Project().ToArray();
+            var query = gameQuery;
+
+            if (sportType.HasValue)
+                query = gameQuery.WhereSportType(sportType.Value);
+
+
+            return query.WhereUnresolved().AsGameOfferView();
         }
     }
 }
