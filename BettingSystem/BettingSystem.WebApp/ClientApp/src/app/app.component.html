@@ -1,10 +1,8 @@
 <div class='container-fluid'>
-  <div class='row'>
-    <div class='col-sm-3'>
-      <app-nav-menu></app-nav-menu>
+    <app-nav-menu></app-nav-menu>
+    <div class="row my-5">
+      <div class='offset-sm-2 col-sm-8 body-content'>
+        <router-outlet></router-outlet>
+      </div>
     </div>
-    <div class='col-sm-9 body-content'>
-      <router-outlet></router-outlet>
-    </div>
-  </div>
-</div>
+ </div>

@@ -7,9 +7,9 @@ namespace BettingSystem.Core.BaseInterfaces
 {
     public interface IRepository<T> where T : BaseDomainModel
     {
-        void Create(T domainModel);
-        void CreateMany(ICollection<T> domainModels);
-        void Update(T domainModel);
-        void UpdateMany(ICollection<T> domainModels);
+        bool Create(T domainModel);
+        bool CreateMany(ICollection<T> domainModels);
+        bool Update(T domainModel);
+        bool UpdateMany(ICollection<T> domainModels);
     }
 }

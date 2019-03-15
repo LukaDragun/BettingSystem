@@ -1,18 +1,14 @@
 import { Component } from '@angular/core';
+import { CurrentBetService } from '../current-bet/current-bet.service';
 
 @Component({
   selector: 'app-nav-menu',
-  templateUrl: './nav-menu.component.html',
-  styleUrls: ['./nav-menu.component.css']
+  templateUrl: './nav-menu.component.html'
 })
+
 export class NavMenuComponent {
-  isExpanded = false;
+  constructor(public currentBetService: CurrentBetService) { }
 
-  collapse() {
-    this.isExpanded = false;
-  }
+  public getCurrentBetCount = () => this.currentBetService.getCurrentBetCount();
 
-  toggle() {
-    this.isExpanded = !this.isExpanded;
-  }
 }

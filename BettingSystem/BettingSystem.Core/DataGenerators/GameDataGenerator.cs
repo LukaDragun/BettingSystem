@@ -8,7 +8,7 @@ namespace BettingSystem.Core.DataGenerators
 {
     public static class GameDataGenerator
     {
-        static readonly string[] teamNames = { "Hajduk", "Dinamo", "Osijek", "Rijeka", "Dubrovnik", "Pariz", "London", "Moskva", "München", "Atena" };
+        static readonly string[] teamNames = { "Split", "Zagreb", "Osijek", "Rijeka", "Dubrovnik", "Pariz", "London", "Moskva", "München", "Atena" };
 
         public static List<GameDomainModel> GenerateGames() {
             var games = new List<GameDomainModel>();
@@ -70,7 +70,7 @@ namespace BettingSystem.Core.DataGenerators
                 var coefficient = new CoefficientDomainModel
                 {
                     BetType = (BetType)coefficients[i],
-                    CoefficientValue = (float)(rand.Next(1, 3) + rand.NextDouble())
+                    CoefficientValue = (float)(rand.Next(1, 3) + Math.Round(rand.NextDouble(), 2))
                 };
 
                 items.Add(coefficient);

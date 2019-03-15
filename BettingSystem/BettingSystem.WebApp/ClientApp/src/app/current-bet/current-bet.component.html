@@ -1,0 +1,23 @@
+<table class="table text-center">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Sport Type</th>
+      <th scope="col">Game</th>
+      <th scope="col">Bet Type</th>
+      <th scope="col">Bet Coefficient</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="currentBets">
+    <tr *ngFor="let bet of currentBets; index as i;">
+      <th scope="row"> {{bet.sportType}}</th>
+      <td>{{bet.firstTeamName}} - {{bet.secondTeamName}}</td>
+      <td>{{bet.betType}}</td>
+      <td>{{bet.coefficientValue}}</td>
+      <td><button class="btn btn-link text-danger" type="button" (click) = "removeCoefficient()">X</button></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>BetValue: <input type="number" [(ngModel)]="value"></p>
+<ng5-slider [(value)]="value" [options]="options"></ng5-slider>

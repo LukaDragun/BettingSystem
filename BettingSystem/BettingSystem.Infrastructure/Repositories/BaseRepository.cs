@@ -27,42 +27,46 @@ namespace BettingSystem.Infrastructure
             return domainModel;
         }
 
-        public void Create(TDomainModel domainModel)
+        public bool Create(TDomainModel domainModel)
         {
+            domainModel.SetCreateDateTime();
             var entity = MapDomainModelToEntity(domainModel);
             context.Add(entity);
-            context.SaveChanges();
+            return context.SaveChanges() != 0;
         }
 
-        public void CreateMany(ICollection<TDomainModel> domainModels)
+        public bool CreateMany(ICollection<TDomainModel> domainModels)
         {
             var entities = new List<TEntity>();
 
             foreach(var domainModel in domainModels) {
+                domainModel.SetCreateDateTime();
                 var entity = MapDomainModelToEntity(domainModel);
                 entities.Add(entity);
             }
             context.AddRange(entities);
-            context.SaveChanges();
+            return context.SaveChanges() != 0;
         }
 
-        public void UpdateMany(ICollection<TDomainModel> domainModels)
+        public bool UpdateMany(ICollection<TDomainModel> domainModels)
         {
             var entities = new List<TEntity>();
 
             foreach (var domainModel in domainModels)
             {
+                domainModel.SetUpdateDateTime();
                 var entity = MapDomainModelToEntity(domainModel);
                 context.Entry(entity).State = EntityState.Modified;
             }
-            context.SaveChanges();
+            return context.SaveChanges() != 0;
         }
 
-        public void Update(TDomainModel domainModel)
+        public bool Update(TDomainModel domainModel)
         {
+            domainModel.SetUpdateDateTime();
             var entity = MapDomainModelToEntity(domainModel);
             context.Entry(entity).State = EntityState.Modified;
-            context.SaveChanges();
+            return context.SaveChanges() != 0;
         }
 
         protected abstract TEntity MapDomainModelToEntity(TDomainModel domainModel);

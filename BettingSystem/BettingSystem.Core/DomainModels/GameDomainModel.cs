@@ -35,7 +35,6 @@ namespace BettingSystem.Core.DomainModels
             FirstTeamScore = rand.Next(1, 7);
             SecondTeamScore = rand.Next(1, 7);
             DateTimePlayed = dateTimePlayed;
-            SetUpdateDateTime();
 
             ErrorCheck();
         }

@@ -8,6 +8,7 @@ namespace BettingSystem.Core
         public static void InitializeCoreServices(this IServiceCollection services)
         {
             services.AddScoped<GameService>();
+            services.AddScoped<WalletTransactionService>();
         }
     }
 }

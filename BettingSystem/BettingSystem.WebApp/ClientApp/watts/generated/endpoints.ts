@@ -70,4 +70,68 @@ export namespace Endpoints {
             return `api/Game` + this.getQueryString();
         }
     }
+
+    export namespace Wallet {
+        export interface IWalletService {
+            AddFunds: (args?: IAddFunds) => IAddFundsWithCall
+            GetTotalFunds: (args?: IGetTotalFunds) => IGetTotalFundsWithCall
+        }
+    
+        export interface IAddFunds {
+            value: number;
+        }
+    
+        export interface IAddFundsEndpoint extends IAddFunds, IEndpoint {
+        }
+    
+        export interface IAddFundsCtor {
+            new(args?: IAddFunds): IAddFundsEndpoint
+        }
+    
+        export interface IAddFundsWithCall extends IAddFunds, IEndpoint {
+            call<TView>(): Promise<TView>;
+        }
+    
+        export var AddFunds : IAddFundsCtor = <any>(function(args?: IAddFunds) {
+            this._verb = 'PUT';
+            this.value = args != null ? args.value : null;
+        });
+    
+        AddFunds.prototype.getQueryString = function(): string {
+            var parameters: string[] = [];
+            addParameter(parameters, 'value', this.value);
+        
+            if (parameters.length > 0) {
+                return '?' + parameters.join('&');
+            }
+        
+            return '';
+        }
+    
+        AddFunds.prototype.toString = function(): string {
+            return `api/Wallet/addFunds` + this.getQueryString();
+        }
+    
+        export interface IGetTotalFunds {
+        }
+    
+        export interface IGetTotalFundsEndpoint extends IGetTotalFunds, IEndpoint {
+        }
+    
+        export interface IGetTotalFundsCtor {
+            new(args?: IGetTotalFunds): IGetTotalFundsEndpoint
+        }
+    
+        export interface IGetTotalFundsWithCall extends IGetTotalFunds, IEndpoint {
+            call<TView>(): Promise<TView>;
+        }
+    
+        export var GetTotalFunds : IGetTotalFundsCtor = <any>(function(args?: IGetTotalFunds) {
+            this._verb = 'GET';
+        });
+    
+        GetTotalFunds.prototype.toString = function(): string {
+            return `api/Wallet`;
+        }
+    }
 }

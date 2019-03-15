@@ -3,39 +3,44 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { SportHandlerComponent } from './sport-handler/sport-handler.component';
 import { AngularEndpointsService } from '../../watts/generated/angular-endpoints.service';
+import { EnumToArrayPipe } from './pipes/enumToArray.pipe';
+import { CurrentBetService } from './current-bet/current-bet.service';
+import { CurrentBetComponent } from './current-bet/current-bet.component';
+import { Ng5SliderModule } from 'ng5-slider';
+import { WalletComponent } from './wallet/wallet.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
+    EnumToArrayPipe,
     HomeComponent,
     CounterComponent,
-    FetchDataComponent,
+    WalletComponent,
     SportHandlerComponent,
+    CurrentBetComponent
   ],
   imports: [
+    Ng5SliderModule,
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
-    
-    NgbModule,
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: CounterComponent, pathMatch: 'full' },
       { path: 'sport/:sportName', component: SportHandlerComponent },
-      { path: 'wallet', component: CounterComponent },
-      { path: 'bets', component: FetchDataComponent, pathMatch: 'full' },
-      { path: 'bets/:betId', component: FetchDataComponent },
+      { path: 'current-bet', component: CurrentBetComponent },
+      { path: 'wallet', component: WalletComponent },
+      { path: 'bets', component: CounterComponent, pathMatch: 'full' },
+      { path: 'bets/:betId', component: CounterComponent },
     ])
   ],
-  providers: [AngularEndpointsService],
+  providers: [AngularEndpointsService, CurrentBetService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -32,6 +32,7 @@ namespace BettingSystem.Infrastructure
         private static void RegisterQueries(IServiceCollection services)
         {
             services.AddScoped<IGameQuery, GameQuery>();
+            services.AddScoped<IWalletTransactionQuery, WalletTransactionQuery>();
         }
 
     }

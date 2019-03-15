@@ -1,0 +1,48 @@
+<h1>Wallet Transactions</h1>
+
+<table *ngIf="funds" class="table text-center mt-5">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Transaction Time</th>
+      <th scope="col">Transaction Value</th>
+      <th scope="col">Transaction Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container>
+      <tr *ngFor="let transaction of funds.transactions;">
+        <th scope="row"> {{transaction.dateTimeUpdated | date : "MM/dd/yyyy hh:mm"}}</th>
+        <td>{{transaction.transactionValue}}</td>
+        <td>{{transactionTypes[transaction.transactionType]}}</td>
+      </tr>
+    </ng-container>
+
+    <tr>
+      <th scope="row" class="bg-info" colspan="3"> Total Funds: {{funds.totalFunds}}</th>
+    </tr>
+
+  </tbody>
+</table>
+
+<button type="button" class="offset-9 col-3 btn btn-success" data-toggle="modal" data-target="#addFundsModal">Add funds <i class="fas fa-plus"></i></button>
+
+<!-- Modal -->
+<div class="modal fade" id="addFundsModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Funds</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ng5-slider [(value)]="addFundsValue" [options]="options"></ng5-slider>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="button" (click)="addFunds()" data-dismiss="modal" class="btn btn-success">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>

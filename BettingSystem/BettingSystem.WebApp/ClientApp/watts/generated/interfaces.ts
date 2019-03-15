@@ -8,7 +8,7 @@ export namespace Interfaces {
 
     export interface IGameOfferView {
         bestOffers: Interfaces.IGameView[];
-        otherGames: Interfaces.IGameView[];
+        otherOffers: Interfaces.IGameView[];
     }
 
     export interface IGameView {
@@ -20,5 +20,17 @@ export namespace Interfaces {
         dateTimeStarting: string;
         dateTimePlayed: string;
         coefficients: Interfaces.ICoefficientView[];
+    }
+
+    export interface ITotalFundsView {
+        totalFunds: number;
+        transactions: Interfaces.IWalletTransactionView[];
+    }
+
+    export interface IWalletTransactionView {
+        dateTimeUpdated: string;
+        transactionValue: number;
+        transactionType: Enums.TransactionType;
+        betId: number;
     }
 }

@@ -1,55 +1,46 @@
-<div class='main-nav'>
-  <div class='navbar navbar-inverse'>
-    <div class='navbar-header'>
-      <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse' [attr.aria-expanded]='isExpanded' (click)='toggle()'>
-        <span class='sr-only'>Toggle navigation</span>
-        <span class='icon-bar'></span>
-        <span class='icon-bar'></span>
-        <span class='icon-bar'></span>
-      </button>
-      <a class='navbar-brand' [routerLink]='["/"]'>BettingSystem</a>
-    </div>
-    <div class='clearfix'></div>
-    <div class='navbar-collapse collapse' [ngClass]='{ "in": isExpanded }'>
-      <ul class='nav navbar-nav'>
-        <li>
-          <button (click)="isCollapsed = !isCollapsed" class="btn btn-link"
-                  [attr.aria-expanded]="isCollapsed" aria-controls="sportsCollapse">
-            <span class='glyphicon glyphicon-th'></span> Sports
-          </button>
-        </li>
-        <li>
-          <div id="sportsCollapse" [ngbCollapse]="!isCollapsed">
-            <ul class='nav navbar-nav'>
-              <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
-                <a [routerLink]='["sport/football"]'>
-                  <span class='glyphicon glyphicon-list'></span> Football
-                </a>
-              </li>
-              <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
-                <a [routerLink]='["sport/basketball"]'>
-                  <span class='glyphicon glyphicon-list'></span> Basketball
-                </a>
-              </li>
-              <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
-                <a [routerLink]='["sport/handball"]'>
-                  <span class='glyphicon glyphicon-list'></span> Handball
-                </a>
-              </li>
-            </ul>
+<div class="main-nav">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-left">
+    <a class='navbar-brand' [routerLink]='["/"]'>BettingSystem</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavigation" aria-controls="mainNavigation" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="mainNavigation">
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Sports
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a [routerLinkActive]='["active"]' [routerLink]='["sport/football"]' class="dropdown-item">
+              Football
+            </a>
+            <a [routerLinkActive]='["active"]' [routerLink]='["sport/basketball"]' class="dropdown-item">
+              Basketball
+            </a>
+            <a [routerLinkActive]='["active"]' [routerLink]='["sport/handball"]' class="dropdown-item">
+              Handball
+            </a>
           </div>
         </li>
-        <li [routerLinkActive]='["link-active"]'>
-          <a [routerLink]='["/bets"]' (click)='collapse()'>
-            <span class='glyphicon glyphicon-eye-open'></span> Previous Bets
+        <li [routerLinkActive]='["active"]' class="nav-item">
+          <a [routerLink]='["/bets"]' class="nav-link">
+            Previous Bets
           </a>
         </li>
-        <li [routerLinkActive]='["link-active"]'>
-          <a [routerLink]='["/wallet"]' (click)='collapse()'>
-            <span class='glyphicon glyphicon-euro'></span> Wallet
+        <li [routerLinkActive]='["active"]' class="nav-item">
+          <a [routerLink]='["/wallet"]' class="nav-link">
+            Wallet
+          </a>
+        </li>
+
+        <li [routerLinkActive]='["active"]' class="nav-item">
+          <a [routerLink]='["/current-bet"]' class="nav-link">
+            Current Bet <span *ngIf="!!getCurrentBetCount()" class="badge badge-success">{{getCurrentBetCount()}}</span>
           </a>
         </li>
       </ul>
+      <span class="border-top my-3"></span>
     </div>
-  </div>
+  </nav>
 </div>

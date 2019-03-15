@@ -2,7 +2,6 @@
 using BettingSystem.Core.InfrastructureContracts.Queries;
 using BettingSystem.Core.Views;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 
 namespace BettingSystem.WebApp.Controllers
 {

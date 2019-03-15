@@ -18,6 +18,24 @@ export class AngularEndpointsService {
                 }
             });
         };
+    
+        this.Wallet.AddFunds = (args: Endpoints.Wallet.IAddFunds): Endpoints.Wallet.IAddFundsWithCall => {
+            var endpoint = new Endpoints.Wallet.AddFunds(args);
+            return _.extend(endpoint, {
+                call<TView>() {
+                    return AngularEndpointsService.call<TView>(http, this, null);
+                }
+            });
+        };
+    
+        this.Wallet.GetTotalFunds = (args?: Endpoints.Wallet.IGetTotalFunds): Endpoints.Wallet.IGetTotalFundsWithCall => {
+            var endpoint = new Endpoints.Wallet.GetTotalFunds(args);
+            return _.extend(endpoint, {
+                call<TView>() {
+                    return AngularEndpointsService.call<TView>(http, this, null);
+                }
+            });
+        };
     }
 
     static call<TView>(http: HttpClient, endpoint: Endpoints.IEndpoint, data) {
@@ -38,4 +56,5 @@ export class AngularEndpointsService {
     }
 
     public Game: Endpoints.Game.IGameService = <any>{};
+    public Wallet: Endpoints.Wallet.IWalletService = <any>{};
 }

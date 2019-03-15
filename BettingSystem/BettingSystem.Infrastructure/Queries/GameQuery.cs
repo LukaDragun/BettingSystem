@@ -57,12 +57,12 @@ namespace BettingSystem.Infrastructure.Queries
 
         public GameOfferView AsGameOfferView()
         {
-            var games = this.Project().ToArray().OrderBy(e => e.Coefficients.Select(v => v.CoefficientValue).Aggregate(1.0, (x,y) => x * y ));
+            var games = this.Project().ToArray().OrderByDescending(e => e.Coefficients.Select(v => v.CoefficientValue).Aggregate(1.0, (x,y) => x * y ));
 
             return new GameOfferView
             {
                 BestOffers = games.Take(1).OrderBy(e => e.DateTimeStarting).ToArray(),
-                OtherGames = games.Skip(1).OrderBy(e => e.DateTimeStarting).ToArray()
+                OtherOffers = games.Skip(1).OrderBy(e => e.DateTimeStarting).ToArray()
             };
         }
     }
