@@ -54,7 +54,7 @@ export namespace Endpoints {
         });
     
         PlaceBet.prototype.toString = function(): string {
-            return `api/Bet/placeBet`;
+            return `api/bet/placeBet`;
         }
     }
 
@@ -95,7 +95,7 @@ export namespace Endpoints {
         }
     
         GetAllGames.prototype.toString = function(): string {
-            return `api/Game` + this.getQueryString();
+            return `api/game` + this.getQueryString();
         }
     }
 
@@ -137,7 +137,7 @@ export namespace Endpoints {
         }
     
         AddFunds.prototype.toString = function(): string {
-            return `api/Wallet/addFunds` + this.getQueryString();
+            return `api/wallet/addFunds` + this.getQueryString();
         }
     
         export interface IGetTotalFunds {
@@ -172,7 +172,7 @@ export namespace Endpoints {
         }
     
         GetTotalFunds.prototype.toString = function(): string {
-            return `api/Wallet` + this.getQueryString();
+            return `api/wallet` + this.getQueryString();
         }
     }
 }

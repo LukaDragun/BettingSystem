@@ -5,7 +5,6 @@
   "EndpointsOutputDirectory": "./generated",
   "EndpointsFileName": "endpoints.ts",
   "EndpointsNamespace": "Endpoints",
-  "EndpointsPrefix": "api",
   "GenerateService": true,
   "ServiceOutputDirectory": "./generated",
   "ServiceFileName": "angular-endpoints.service.ts",
