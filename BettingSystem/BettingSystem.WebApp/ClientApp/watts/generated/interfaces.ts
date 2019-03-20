@@ -1,5 +1,10 @@
 import { Enums } from './enums';
 export namespace Interfaces {
+    export interface IBetDto {
+        betValue: number;
+        coefficientIds: number[];
+    }
+
     export interface ICoefficientView {
         id: number;
         betType: Enums.BetType;

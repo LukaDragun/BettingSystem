@@ -17,18 +17,18 @@ namespace BettingSystem.WebApp.Controllers
             this.walletTransactionQuery = walletTransactionQuery;
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("addFunds")]
-        public ActionResult<bool> AddFunds(int value)
+        public void AddFunds(int value)
         {
-           return walletTransactionService.AddFunds(value);
+           walletTransactionService.AddFunds(value);
         }
 
         [HttpGet]
         [Route("")]
-        public ActionResult<TotalFundsView> GetTotalFunds()
+        public ActionResult<TotalFundsView> GetTotalFunds(bool includeTransactions = true)
         {
-            return walletTransactionQuery.AsTotalFundsView();
+            return walletTransactionQuery.AsTotalFundsView(includeTransactions);
         }
     }
 }

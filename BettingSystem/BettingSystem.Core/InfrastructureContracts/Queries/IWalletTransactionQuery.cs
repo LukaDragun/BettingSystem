@@ -8,6 +8,6 @@ namespace BettingSystem.Core.InfrastructureContracts.Queries
 {
     public interface IWalletTransactionQuery : IQuery<WalletTransactionView>
     {
-        TotalFundsView AsTotalFundsView();
+        TotalFundsView AsTotalFundsView(bool includeTransactions);
     }
 }

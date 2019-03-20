@@ -32,7 +32,7 @@ import { WalletComponent } from './wallet/wallet.component';
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: '', component: CounterComponent, pathMatch: 'full' },
+      { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'sport/:sportName', component: SportHandlerComponent },
       { path: 'current-bet', component: CurrentBetComponent },
       { path: 'wallet', component: WalletComponent },

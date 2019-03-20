@@ -9,5 +9,6 @@ namespace BettingSystem.Core.InfrastructureContracts.Repositories
     public interface IBetRepository : IRepository<BetDomainModel>
     {
         List<BetDomainModel> GetUnresolvedBets();
+        List<CoefficientDomainModel> GetCoefficientsForBet(int[] coefficientIds);
     }
 }

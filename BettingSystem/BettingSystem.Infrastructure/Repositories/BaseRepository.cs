@@ -27,15 +27,16 @@ namespace BettingSystem.Infrastructure
             return domainModel;
         }
 
-        public bool Create(TDomainModel domainModel)
+        public int Create(TDomainModel domainModel)
         {
             domainModel.SetCreateDateTime();
             var entity = MapDomainModelToEntity(domainModel);
             context.Add(entity);
-            return context.SaveChanges() != 0;
+            context.SaveChanges();
+            return entity.Id;
         }
 
-        public bool CreateMany(ICollection<TDomainModel> domainModels)
+        public IEnumerable<int> CreateMany(ICollection<TDomainModel> domainModels)
         {
             var entities = new List<TEntity>();
 
@@ -45,7 +46,8 @@ namespace BettingSystem.Infrastructure
                 entities.Add(entity);
             }
             context.AddRange(entities);
-            return context.SaveChanges() != 0;
+            context.SaveChanges();
+            return entities.Select(e => e.Id);
         }
 
         public bool UpdateMany(ICollection<TDomainModel> domainModels)

@@ -22,6 +22,15 @@ namespace BettingSystem.Infrastructure.Repositories
             return context.Set<Bet>().Include(e => e.BetCoefficients).ThenInclude(bc => bc.Coefficient).Where(e => !e.IsResolved).Select(e => MapEntityToDomainModel(e)).ToList();
         }
 
+        public List<CoefficientDomainModel> GetCoefficientsForBet(int[] coefficientIds)
+        {
+            return context.Set<Coefficient>().Where(e => coefficientIds.Contains(e.Id)).Select(e => new CoefficientDomainModel {
+                CoefficientValue = e.CoefficientValue,
+                BetType = e.BetType,
+                Id = e.Id
+            }).ToList();
+        }
+
         protected override Bet MapDomainModelToEntity(BetDomainModel domainModel)
         {
             return new Bet

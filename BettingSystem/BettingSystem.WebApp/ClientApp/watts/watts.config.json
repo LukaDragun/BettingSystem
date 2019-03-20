@@ -30,6 +30,9 @@
   "InterfaceMatches": [
     {
       "Match": "BettingSystem.Core.Views"
+    },
+    {
+      "Match": "BettingSystem.Core.TransferObjects"
     }
   ]
 }

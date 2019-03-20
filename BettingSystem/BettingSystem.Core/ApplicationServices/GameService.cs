@@ -32,7 +32,5 @@ namespace BettingSystem.Core.ApplicationServices
 
             gameRepository.UpdateMany(games);
         }
-
-
     }
 }

@@ -30,6 +30,34 @@ export namespace Endpoints {
         }
     }
 
+    export namespace Bet {
+        export interface IBetService {
+            PlaceBet: (args?: IPlaceBet) => IPlaceBetWithCall
+        }
+    
+        export interface IPlaceBet {
+        }
+    
+        export interface IPlaceBetEndpoint extends IPlaceBet, IEndpoint {
+        }
+    
+        export interface IPlaceBetCtor {
+            new(args?: IPlaceBet): IPlaceBetEndpoint
+        }
+    
+        export interface IPlaceBetWithCall extends IPlaceBet, IEndpoint {
+            call<TView>(dto: Interfaces.IBetDto): Promise<TView>;
+        }
+    
+        export var PlaceBet : IPlaceBetCtor = <any>(function(args?: IPlaceBet) {
+            this._verb = 'POST';
+        });
+    
+        PlaceBet.prototype.toString = function(): string {
+            return `api/Bet/placeBet`;
+        }
+    }
+
     export namespace Game {
         export interface IGameService {
             GetAllGames: (args?: IGetAllGames) => IGetAllGamesWithCall
@@ -93,7 +121,7 @@ export namespace Endpoints {
         }
     
         export var AddFunds : IAddFundsCtor = <any>(function(args?: IAddFunds) {
-            this._verb = 'PUT';
+            this._verb = 'POST';
             this.value = args != null ? args.value : null;
         });
     
@@ -113,6 +141,7 @@ export namespace Endpoints {
         }
     
         export interface IGetTotalFunds {
+            includeTransactions?: boolean;
         }
     
         export interface IGetTotalFundsEndpoint extends IGetTotalFunds, IEndpoint {
@@ -128,10 +157,22 @@ export namespace Endpoints {
     
         export var GetTotalFunds : IGetTotalFundsCtor = <any>(function(args?: IGetTotalFunds) {
             this._verb = 'GET';
+            this.includeTransactions = args != null ? args.includeTransactions : null;
         });
     
+        GetTotalFunds.prototype.getQueryString = function(): string {
+            var parameters: string[] = [];
+            addParameter(parameters, 'includeTransactions', this.includeTransactions);
+        
+            if (parameters.length > 0) {
+                return '?' + parameters.join('&');
+            }
+        
+            return '';
+        }
+    
         GetTotalFunds.prototype.toString = function(): string {
-            return `api/Wallet`;
+            return `api/Wallet` + this.getQueryString();
         }
     }
 }

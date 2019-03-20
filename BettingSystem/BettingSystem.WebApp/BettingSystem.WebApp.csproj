@@ -57,11 +57,11 @@
       </ResolvedFileToPublish>
     </ItemGroup>
   </Target>
-  
-  <UsingTask TaskName="WebApiToTypeScript.WebApiToTypeScript" AssemblyFile="$(ProjectDir)\ClientApp\watts\WebApiToTypeScript.dll" />
+
+   <!-- <UsingTask TaskName="WebApiToTypeScript" AssemblyFile="$(ProjectDir)ClientApp\watts\WebApiToTypeScript.dll" />
 	<Target Name="RunWatts" AfterTargets="Build">
-		<WebApiToTypeScript ConfigFilePath="$(ProjectDir)\ClientApp\watts\watts.config.json" />
+		<WebApiToTypeScript ConfigFilePath="$(ProjectDir)ClientApp\watts\watts.config.json" />
 		<Message Importance="High" Text="Watts success" />
-	</Target>
+	</Target>  -->
 
 </Project>

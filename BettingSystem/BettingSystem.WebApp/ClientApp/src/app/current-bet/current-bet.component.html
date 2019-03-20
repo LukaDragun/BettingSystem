@@ -8,16 +8,31 @@
       <th scope="col">Actions</th>
     </tr>
   </thead>
-  <tbody *ngIf="currentBets">
-    <tr *ngFor="let bet of currentBets; index as i;">
+  <tbody *ngIf="!!selectedCoefficients.length">
+    <tr *ngFor="let bet of selectedCoefficients; index as i;">
       <th scope="row"> {{bet.sportType}}</th>
       <td>{{bet.firstTeamName}} - {{bet.secondTeamName}}</td>
       <td>{{bet.betType}}</td>
       <td>{{bet.coefficientValue}}</td>
-      <td><button class="btn btn-link text-danger" type="button" (click) = "removeCoefficient()">X</button></td>
+      <td><button class="btn btn-link text-danger" type="button" (click)="removeCoefficient()">X</button></td>
+    </tr>
+    <tr *ngIf="!!options">
+      <th colspan="2" scope="row">Coefficient Value: {{getCoefficientValue().toFixed(2)}}</th>
+      <td colspan="2">Profit Value: {{getProfitValue().toFixed(2)}} <small>(5% manipulative expenses)</small></td>
+    </tr>
+  </tbody>
+  <tbody *ngIf="!selectedCoefficients.length">
+    <tr>
+      <th scope="row" class="bg-info" colspan="6"> No bets placed yet. It is never to late to start.</th>
     </tr>
   </tbody>
 </table>
 
-<p>BetValue: <input type="number" [(ngModel)]="value"></p>
-<ng5-slider [(value)]="value" [options]="options"></ng5-slider>
+<div class="row mt-5">
+  <div class="col-6">
+    <span>Bet Value :</span>
+    <ng5-slider *ngIf="!!options" [(value)]="betValue" [options]="options"></ng5-slider>
+  </div>
+  <div class="col-6"><button type="button" [disabled]="!selectedCoefficients.length" (click)="placeBet()" class="mt-4 offset-3 col-9 btn btn-success">Place Bet</button></div>
+</div>
+

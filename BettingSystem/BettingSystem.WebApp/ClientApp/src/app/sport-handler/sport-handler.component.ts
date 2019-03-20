@@ -43,7 +43,7 @@ export class SportHandlerComponent implements OnInit {
     return item ? item.coefficientValue.toString() : "";
   }
 
-  public placeBet = (game: Interfaces.IGameView, betType: string, isSpecialOffer: boolean) => {
+  public addCoefficient = (game: Interfaces.IGameView, betType: string, isSpecialOffer: boolean) => {
     var coefficient = game.coefficients.find((el) => el.betType == Enums.BetType[betType]);
 
     this.currentBetService.placeBetOnCoefficient(game.id, this.sportTypes[this.sportType].toString(), game.firstTeamName, game.secondTeamName, isSpecialOffer, coefficient);

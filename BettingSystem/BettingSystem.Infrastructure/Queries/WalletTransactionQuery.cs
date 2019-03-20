@@ -28,14 +28,14 @@ namespace BettingSystem.Infrastructure.Queries
                    };
         }
 
-        public TotalFundsView AsTotalFundsView()
+        public TotalFundsView AsTotalFundsView(bool includeTransactions)
         {
             var items = this.Project().ToArray();
 
             return new TotalFundsView
             {
                 TotalFunds = items.Sum(e => e.TransactionValue),
-                Transactions = items
+                Transactions = includeTransactions ? items : null,
             };
         }
     }

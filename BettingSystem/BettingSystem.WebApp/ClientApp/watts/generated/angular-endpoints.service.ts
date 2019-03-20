@@ -10,6 +10,15 @@ import { Interfaces } from './interfaces';
 @Injectable()
 export class AngularEndpointsService {
     constructor(http: HttpClient) {
+        this.Bet.PlaceBet = (args?: Endpoints.Bet.IPlaceBet): Endpoints.Bet.IPlaceBetWithCall => {
+            var endpoint = new Endpoints.Bet.PlaceBet(args);
+            return _.extend(endpoint, {
+                call<TView>(dto: Interfaces.IBetDto) {
+                    return AngularEndpointsService.call<TView>(http, this, dto != null ? dto : null);
+                }
+            });
+        };
+    
         this.Game.GetAllGames = (args?: Endpoints.Game.IGetAllGames): Endpoints.Game.IGetAllGamesWithCall => {
             var endpoint = new Endpoints.Game.GetAllGames(args);
             return _.extend(endpoint, {
@@ -55,6 +64,7 @@ export class AngularEndpointsService {
         return call.toPromise();
     }
 
+    public Bet: Endpoints.Bet.IBetService = <any>{};
     public Game: Endpoints.Game.IGameService = <any>{};
     public Wallet: Endpoints.Wallet.IWalletService = <any>{};
 }

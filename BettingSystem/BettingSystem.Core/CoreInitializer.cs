@@ -9,6 +9,7 @@ namespace BettingSystem.Core
         {
             services.AddScoped<GameService>();
             services.AddScoped<WalletTransactionService>();
+            services.AddScoped<BetService>();
         }
     }
 }

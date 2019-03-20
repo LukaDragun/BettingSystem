@@ -16,7 +16,7 @@
     <tr *ngFor="let game of gamesData.bestOffers;">
       <th scope="row">{{game.firstTeamName}} - {{game.secondTeamName}}</th>
       <ng-container *ngFor="let betType of betTypes | enumToArray">
-        <td><button type="button" (click)="placeBet(game, betType, true)" [ngClass] ="IsBetPlacedForCoefficient(game,betType) ? 'btn-success' : 'btn-light'" class="btn" *ngIf="getCoefficientValue(game, betType)">{{getCoefficientValue(game, betType)}}</button></td>
+        <td><button type="button" (click)="addCoefficient(game, betType, true)" [ngClass] ="IsBetPlacedForCoefficient(game,betType) ? 'btn-success' : 'btn-light'" class="btn" *ngIf="getCoefficientValue(game, betType)">{{getCoefficientValue(game, betType)}}</button></td>
       </ng-container>
     </tr>
   </tbody>
@@ -35,7 +35,7 @@
     <tr *ngFor="let game of gamesData.otherOffers;">
       <th scope="row">{{game.firstTeamName}} - {{game.secondTeamName}}</th>
       <ng-container *ngFor="let betType of betTypes | enumToArray">
-        <td><button type="button" (click)="placeBet(game, betType, false)" [ngClass] ="IsBetPlacedForCoefficient(game,betType) ? 'btn-success' : 'btn-light'" class="btn" *ngIf="getCoefficientValue(game, betType)">{{getCoefficientValue(game, betType)}}</button></td>
+        <td><button type="button" (click)="addCoefficient(game, betType, false)" [ngClass] ="IsBetPlacedForCoefficient(game,betType) ? 'btn-success' : 'btn-light'" class="btn" *ngIf="getCoefficientValue(game, betType)">{{getCoefficientValue(game, betType)}}</button></td>
       </ng-container>
     </tr>
   </tbody>

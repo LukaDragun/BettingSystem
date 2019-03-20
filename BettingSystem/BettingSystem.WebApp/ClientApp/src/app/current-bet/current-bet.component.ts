@@ -9,24 +9,48 @@ import { Options } from 'ng5-slider';
   selector: 'current-bet',
   templateUrl: './current-bet.component.html',
 })
-
 export class CurrentBetComponent {
 
-  value: number = 100;
-  options: Options = {
-    floor: 0,
-    ceil: 250
-  };
+  betValue: number = 1;
+  options: Options = null
 
-  public currentBets: IBetCoefficientView[];
+  public selectedCoefficients: IBetCoefficientView[];
 
-  constructor(private currentBetService: CurrentBetService) {
-    this.currentBets = this.currentBetService.currentBets;
+  constructor(public currentBetService: CurrentBetService, public endpointsService: AngularEndpointsService) {
+    this.selectedCoefficients = this.currentBetService.currentBets;
+
+    endpointsService.Wallet.GetTotalFunds({ includeTransactions: false }).call<Interfaces.ITotalFundsView>().then((data) => {
+      this.options = {
+        floor: 1,
+        ceil: data.totalFunds
+      };
+    })
   }
 
-  public removeCoefficient = (index: number) => this.currentBets.splice(index,1);
+  public removeCoefficient = (index: number) => this.selectedCoefficients.splice(index, 1);
+  public getCoefficientValue = () => this.selectedCoefficients.map(el => el.coefficientValue).reduce((acc, value) => acc * value);
+  public getProfitValue = () => this.getCoefficientValue() * (95 * this.betValue) / 100;
+  public reloadFunds = () => {
+    this.endpointsService.Wallet.GetTotalFunds({ includeTransactions: false }).call<Interfaces.ITotalFundsView>().then((data) => {
+      this.options = {
+        floor: 1,
+        ceil: data.totalFunds
+      };
+    });
+  }
 
-  ngOnInit() {
+  public placeBet() {
+    let dto = <Interfaces.IBetDto>{
+      betValue : this.betValue,
+      coefficientIds : this.selectedCoefficients.map(el => el.id)
+    }
+
+    this.endpointsService.Bet.PlaceBet().call<boolean>(dto).then((data) => {
+      this.reloadFunds();
+      this.betValue = 1;
+      this.selectedCoefficients.splice(0, this.selectedCoefficients.length);
+    })
+
   }
 
 }

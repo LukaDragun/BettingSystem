@@ -18,7 +18,7 @@ namespace BettingSystem.Core.ApplicationServices
         }
 
 
-        public bool AddFunds(int value)
+        public int AddFunds(int value)
         {
             var transaction = new WalletTransactionDomainModel{
                 TransactionType = TransactionType.Deposit,
