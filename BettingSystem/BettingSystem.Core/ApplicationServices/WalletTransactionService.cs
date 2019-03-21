@@ -28,5 +28,19 @@ namespace BettingSystem.Core.ApplicationServices
             return walletTransactionRepository.Create(transaction);
         }
 
+        public IEnumerable<int> CreateTransactionsForBets(ICollection<Tuple<BetDomainModel, float>> betTransactions)
+        {
+            var transactions = new List<WalletTransactionDomainModel>();
+
+            foreach (var betTransaction in betTransactions)
+            {
+                var transaction = new WalletTransactionDomainModel();
+                transaction.AddBetWithValue(betTransaction.Item1, betTransaction.Item2);
+                transactions.Add(transaction);
+            }
+
+            return walletTransactionRepository.CreateMany(transactions);
+        }
+        
     }
 }

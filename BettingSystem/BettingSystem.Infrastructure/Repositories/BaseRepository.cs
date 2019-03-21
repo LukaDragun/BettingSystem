@@ -58,7 +58,13 @@ namespace BettingSystem.Infrastructure
             {
                 domainModel.SetUpdateDateTime();
                 var entity = MapDomainModelToEntity(domainModel);
-                context.Entry(entity).State = EntityState.Modified;
+                var dbEntity = context.Find<TEntity>(entity.Id);
+                if (dbEntity == null)
+                {
+                    continue;
+                }
+
+                context.Entry(dbEntity).CurrentValues.SetValues(entity);
             }
             return context.SaveChanges() != 0;
         }
@@ -67,7 +73,13 @@ namespace BettingSystem.Infrastructure
         {
             domainModel.SetUpdateDateTime();
             var entity = MapDomainModelToEntity(domainModel);
-            context.Entry(entity).State = EntityState.Modified;
+            var dbEntity = context.Find<TEntity>(entity.Id);
+            if (dbEntity == null)
+            {
+                return false;
+            }
+
+            context.Entry(dbEntity).CurrentValues.SetValues(entity);
             return context.SaveChanges() != 0;
         }
 

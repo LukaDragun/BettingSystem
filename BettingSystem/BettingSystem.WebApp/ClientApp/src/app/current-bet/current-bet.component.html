@@ -10,9 +10,9 @@
   </thead>
   <tbody *ngIf="!!selectedCoefficients.length">
     <tr *ngFor="let bet of selectedCoefficients; index as i;">
-      <th scope="row"> {{bet.sportType}}</th>
+      <th scope="row"> {{bet.gameType}}</th>
       <td>{{bet.firstTeamName}} - {{bet.secondTeamName}}</td>
-      <td>{{bet.betType}}</td>
+      <td>{{getBetTypeName(bet.betType)}}</td>
       <td>{{bet.coefficientValue}}</td>
       <td><button class="btn btn-link text-danger" type="button" (click)="removeCoefficient()">X</button></td>
     </tr>

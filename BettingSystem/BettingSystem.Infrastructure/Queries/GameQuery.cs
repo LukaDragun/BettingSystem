@@ -25,7 +25,7 @@ namespace BettingSystem.Infrastructure.Queries
             return new GameQuery(this, this.inner.Where(e => !e.DateTimePlayed.HasValue));
         }
 
-        public IGameQuery WhereSportType(SportType type)
+        public IGameQuery WhereGameType(GameType type)
         {
             return new GameQuery(this, this.inner.Where(e => e.GameType == type));
         }
@@ -36,6 +36,7 @@ namespace BettingSystem.Infrastructure.Queries
                    select new GameView
                    {
                        Id = game.Id,
+                       GameType = game.GameType,
                        FirstTeamName = game.FirstTeamName,
                        SecondTeamName = game.SecondTeamName,
                        FirstTeamScore = game.FirstTeamScore,
@@ -57,12 +58,16 @@ namespace BettingSystem.Infrastructure.Queries
 
         public GameOfferView AsGameOfferView()
         {
-            var games = this.Project().ToArray().OrderByDescending(e => e.Coefficients.Select(v => v.CoefficientValue).Aggregate(1.0, (x,y) => x * y ));
+            var games = this.Project().ToArray().GroupBy(e => e.GameType).Select(group => new
+            {
+                Type = group.Key,
+                Values = group.OrderByDescending(e => e.Coefficients.Select(v => v.CoefficientValue).Aggregate(1.0, (x, y) => x * y))
+            });
 
             return new GameOfferView
             {
-                BestOffers = games.Take(1).OrderBy(e => e.DateTimeStarting).ToArray(),
-                OtherOffers = games.Skip(1).OrderBy(e => e.DateTimeStarting).ToArray()
+                BestOffers = games.SelectMany(e => e.Values.Take(1)).OrderBy(e => e.DateTimeStarting).ToArray(),
+                OtherOffers = games.SelectMany(e => e.Values.Skip(1)).OrderBy(e => e.DateTimeStarting).ToArray()
             };
         }
     }

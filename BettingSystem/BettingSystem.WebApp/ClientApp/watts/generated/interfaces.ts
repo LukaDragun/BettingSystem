@@ -5,6 +5,27 @@ export namespace Interfaces {
         coefficientIds: number[];
     }
 
+    export interface IBetView {
+        id: number;
+        games: Interfaces.IGameResolutionView[];
+        isResolved: boolean;
+        betValue: number;
+        isResolvable: boolean;
+    }
+
+    export interface IGameResolutionView {
+        gameType: Enums.GameType;
+        firstTeamName: string;
+        secondTeamName: string;
+        firstTeamScore: number;
+        secondTeamScore: number;
+        dateTimeStarting: string;
+        dateTimePlayed: string;
+        isGuessed: boolean;
+        betType: Enums.BetType;
+        coefficientValue: number;
+    }
+
     export interface ICoefficientView {
         id: number;
         betType: Enums.BetType;
@@ -18,6 +39,7 @@ export namespace Interfaces {
 
     export interface IGameView {
         id: number;
+        gameType: Enums.GameType;
         firstTeamName: string;
         secondTeamName: string;
         firstTeamScore: number;

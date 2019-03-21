@@ -8,7 +8,7 @@ export namespace Enums {
         OneTwo = 6,
     }
 
-    export enum SportType {
+    export enum GameType {
         Football = 1,
         Basketball = 2,
         Handball = 3,

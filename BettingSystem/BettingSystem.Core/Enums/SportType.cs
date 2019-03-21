@@ -1,6 +1,6 @@
 ﻿namespace BettingSystem.Common.Core.Enums
 {
-    public enum SportType
+    public enum GameType
     {
         Football = 1,
         Basketball = 2,

@@ -64,7 +64,7 @@ export namespace Endpoints {
         }
     
         export interface IGetAllGames {
-            sportType?: Enums.SportType;
+            sportType?: Enums.GameType;
         }
     
         export interface IGetAllGamesEndpoint extends IGetAllGames, IEndpoint {

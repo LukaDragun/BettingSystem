@@ -12,7 +12,7 @@ export class CurrentBetService {
 
   public isBetAlreadyPlaced = (coefficientId: number, gameId: number) => !!this.currentBets.find((item) => item.gameId === gameId && item.id == coefficientId);
 
-  public placeBetOnCoefficient = (gameId: number, sportType: string, firstTeamName: string, secondTeamName: string, isSpecialOffer: boolean, coefficient: Interfaces.ICoefficientView) => {
+  public placeBetOnCoefficient = (gameId: number, gameType: string, firstTeamName: string, secondTeamName: string, isSpecialOffer: boolean, coefficient: Interfaces.ICoefficientView) => {
     let isBetAlreadyPlaced = this.isBetAlreadyPlaced(coefficient.id, gameId);
     this.currentBets = this.currentBets.filter((el) => el.gameId !== gameId);
 
@@ -23,7 +23,7 @@ export class CurrentBetService {
     if (!isBetAlreadyPlaced) {
       this.currentBets.push({
         gameId: gameId,
-        sportType: sportType,
+        gameType: gameType,
         firstTeamName: firstTeamName,
         secondTeamName: secondTeamName,
         isSpecialOffer: isSpecialOffer,
@@ -54,7 +54,7 @@ export class CurrentBetService {
 
 export interface IBetCoefficientView extends Interfaces.ICoefficientView {
   gameId: number;
-  sportType: string;
+  gameType: string;
   firstTeamName: string;
   secondTeamName: string;
   isSpecialOffer: boolean;

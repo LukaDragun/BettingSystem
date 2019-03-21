@@ -19,6 +19,8 @@ export class CurrentBetComponent {
   constructor(public currentBetService: CurrentBetService, public endpointsService: AngularEndpointsService) {
     this.selectedCoefficients = this.currentBetService.currentBets;
 
+    console.log(this.selectedCoefficients);
+
     endpointsService.Wallet.GetTotalFunds({ includeTransactions: false }).call<Interfaces.ITotalFundsView>().then((data) => {
       this.options = {
         floor: 1,
@@ -38,6 +40,8 @@ export class CurrentBetComponent {
       };
     });
   }
+
+  public getBetTypeName = (betType: Enums.BetType) => this.currentBetService.getBetTypeName(betType);
 
   public placeBet() {
     let dto = <Interfaces.IBetDto>{

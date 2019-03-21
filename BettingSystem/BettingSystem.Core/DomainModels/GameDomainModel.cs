@@ -13,7 +13,7 @@ namespace BettingSystem.Core.DomainModels
             ErrorCheck();
         }
 
-        public SportType GameType { get; set; }
+        public GameType GameType { get; set; }
         public string FirstTeamName { get; set; }
         public string SecondTeamName { get; set; }
         public int? FirstTeamScore { get; set; }
@@ -43,8 +43,8 @@ namespace BettingSystem.Core.DomainModels
         {
             if(!DateTimePlayed.HasValue && (FirstTeamScore.HasValue || SecondTeamScore.HasValue))
             throw new Exception("Cannot change score before game is played");
-           /* if (DateTimePlayed.HasValue && DateTimeStarting > DateTimePlayed)
-            throw new Exception("Time Played cannot be before starting time");*/
+            if (DateTimePlayed.HasValue && DateTimeStarting > DateTimePlayed)
+            throw new Exception("Time Played cannot be before starting time");
             if (Coefficients != null && Coefficients.GroupBy(e => e.BetType).Any(e => e.Count() >= 2))
             throw new Exception("There cannot be 2 coefficients of same type");
         }

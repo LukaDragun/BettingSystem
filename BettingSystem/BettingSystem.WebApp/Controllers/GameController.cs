@@ -17,12 +17,12 @@ namespace BettingSystem.WebApp.Controllers
 
         [HttpGet]
         [Route("")]
-        public ActionResult<GameOfferView> GetAllGames(SportType? sportType = null)
+        public ActionResult<GameOfferView> GetAllGames(GameType? sportType = null)
         {
             var query = gameQuery;
 
             if (sportType.HasValue)
-                query = gameQuery.WhereSportType(sportType.Value);
+                query = gameQuery.WhereGameType(sportType.Value);
 
 
             return query.WhereUnresolved().AsGameOfferView();

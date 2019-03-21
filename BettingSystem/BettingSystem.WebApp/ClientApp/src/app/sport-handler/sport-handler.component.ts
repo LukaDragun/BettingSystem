@@ -16,26 +16,26 @@ export class SportHandlerComponent implements OnInit {
    this.route.params.subscribe(params => {
       switch (params['sportName']) {
         case 'football':
-          this.sportType = Enums.SportType.Football;
+          this.gameType = Enums.GameType.Football;
           break;
         case 'basketball':
-          this.sportType = Enums.SportType.Basketball;
+          this.gameType = Enums.GameType.Basketball;
           break;
         case 'handball':
-          this.sportType = Enums.SportType.Handball;
+          this.gameType = Enums.GameType.Handball;
           break;
         default:
           this.router.navigate(['']);
       }
 
-      this.endpointsService.Game.GetAllGames({ sportType: this.sportType }).call<Interfaces.IGameOfferView>().then((data) => {
+     this.endpointsService.Game.GetAllGames({ sportType: this.gameType }).call<Interfaces.IGameOfferView>().then((data) => {
         this.gamesData = data;
       })
     });
   }
   public gamesData: Interfaces.IGameOfferView =  null;
-  public sportType: Enums.SportType = null;
-  public sportTypes: typeof Enums.SportType = Enums.SportType;
+  public gameType: Enums.GameType = null;
+  public gameTypes: typeof Enums.GameType = Enums.GameType;
   public betTypes: typeof Enums.BetType = Enums.BetType;
 
   public getCoefficientValue = (game: Interfaces.IGameView, betType: string) => {
@@ -46,7 +46,7 @@ export class SportHandlerComponent implements OnInit {
   public addCoefficient = (game: Interfaces.IGameView, betType: string, isSpecialOffer: boolean) => {
     var coefficient = game.coefficients.find((el) => el.betType == Enums.BetType[betType]);
 
-    this.currentBetService.placeBetOnCoefficient(game.id, this.sportTypes[this.sportType].toString(), game.firstTeamName, game.secondTeamName, isSpecialOffer, coefficient);
+    this.currentBetService.placeBetOnCoefficient(game.id, this.gameTypes[this.gameType].toString(), game.firstTeamName, game.secondTeamName, isSpecialOffer, coefficient);
   }
 
   public IsBetPlacedForCoefficient = (game: Interfaces.IGameView, betType: string) => {

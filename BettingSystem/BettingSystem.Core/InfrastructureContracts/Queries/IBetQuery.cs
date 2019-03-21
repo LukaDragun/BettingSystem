@@ -1,14 +1,12 @@
 ﻿using BettingSystem.Common.Core.Enums;
 using BettingSystem.Core.BaseInterfaces;
 using BettingSystem.Core.Views;
+using System.Collections.Generic;
 
 namespace BettingSystem.Core.InfrastructureContracts.Queries
 {
-    public interface IGameQuery : IQuery<GameView>
+    public interface IBetQuery : IQuery<BetView>
     {
-        IGameQuery WhereUnresolved();
-        IGameQuery WhereGameType(GameType type);
-
-        GameOfferView AsGameOfferView();
+        IBetQuery WhereBetIds(IEnumerable<int> ids);
     }
 }

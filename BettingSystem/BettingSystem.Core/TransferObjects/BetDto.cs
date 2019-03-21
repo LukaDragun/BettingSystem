@@ -2,7 +2,7 @@
 {
     public class BetDto
     {
-        public int BetValue { get; set; }
+        public float BetValue { get; set; }
         public int[] CoefficientIds { get; set; }
     }
 }

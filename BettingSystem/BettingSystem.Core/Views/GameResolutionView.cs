@@ -1,23 +1,19 @@
 ﻿using BettingSystem.Common.Core.Enums;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace BettingSystem.Infrastructure.Entities
+namespace BettingSystem.Core.Views
 {
-    public class Game : BaseEntity
+    public class GameResolutionView
     {
-        public Game() { }
-
-        public GameType GameType { get; set; } 
+        public GameType GameType { get; set; }
         public string FirstTeamName { get; set; }
         public string SecondTeamName { get; set; }
         public int? FirstTeamScore { get; set; }
         public int? SecondTeamScore { get; set; }
         public DateTime DateTimeStarting { get; set; }
         public DateTime? DateTimePlayed { get; set; }
-
-
-        public virtual ICollection<Coefficient> Coefficients { get; set; }
+        public bool IsGuessed {get; set;}
+        public BetType BetType { get; set; }
+        public float CoefficientValue { get; set; }
     }
 }

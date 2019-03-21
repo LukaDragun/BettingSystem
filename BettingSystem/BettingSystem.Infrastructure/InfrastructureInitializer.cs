@@ -33,6 +33,7 @@ namespace BettingSystem.Infrastructure
         {
             services.AddScoped<IGameQuery, GameQuery>();
             services.AddScoped<IWalletTransactionQuery, WalletTransactionQuery>();
+            services.AddScoped<IBetQuery, BetQuery>();
         }
 
     }

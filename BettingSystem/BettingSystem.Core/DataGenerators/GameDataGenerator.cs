@@ -12,7 +12,7 @@ namespace BettingSystem.Core.DataGenerators
 
         public static List<GameDomainModel> GenerateGames() {
             var games = new List<GameDomainModel>();
-            foreach (SportType sportType in Enum.GetValues(typeof(SportType)))
+            foreach (GameType sportType in Enum.GetValues(typeof(GameType)))
             {
 
                 var teamNames = GetRandomTeamNames();
@@ -36,15 +36,15 @@ namespace BettingSystem.Core.DataGenerators
             return games;
         }
 
-        private static string GetNamePrefixBySportType(SportType type)
+        private static string GetNamePrefixBySportType(GameType type)
         {
             switch (type)
             {
-            case SportType.Football:
+            case GameType.Football:
                 return "NK. ";
-            case SportType.Basketball:
+            case GameType.Basketball:
                 return "KK. ";
-            case SportType.Handball:
+            case GameType.Handball:
                 return "RK. ";
             default:
                     return "";

@@ -11,5 +11,10 @@ namespace BettingSystem.Core.DomainModels
         public bool IsResolved { get; set; }
 
         public List<CoefficientDomainModel> Coefficients { get; set; }
+
+        public void Resolve()
+        {
+            IsResolved = true;
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace BettingSystem.Infrastructure.Entities
 
         public bool IsResolved { get; set; }
 
-        public WalletTransaction Transaction { get; set; }
+        public ICollection<WalletTransaction> Transactions { get; set; }
         public virtual ICollection<BetCoefficient> BetCoefficients { get; set; }
     }
 }
