@@ -34,7 +34,7 @@ namespace BettingSystem.Infrastructure.Queries
                    join bc in this.context.Set<BetCoefficient>() on bet.Id equals bc.BetId
                    join coefficient in this.context.Set<Coefficient>() on bc.CoefficientId equals coefficient.Id
                    join game in this.context.Set<Game>() on coefficient.GameId equals game.Id
-                   group new { coefficient, game } by new { bet.Id, bet.IsResolved } into betGroups
+                   group new { coefficient, game } by new { bet.Id, bet.IsResolved, bet.CreatedDateTime } into betGroups
                    let betValue = -context.Set<WalletTransaction>().FirstOrDefault(e => e.TransactionType == TransactionType.Bet && e.BetId == betGroups.Key.Id).TransactionValue
                    select new BetView
                    {
@@ -42,6 +42,7 @@ namespace BettingSystem.Infrastructure.Queries
                        IsResolvable = betGroups.All(e => e.game.DateTimePlayed.HasValue),
                        IsResolved = betGroups.Key.IsResolved,
                        BetValue = betValue,
+                       CreatedDateTime = betGroups.Key.CreatedDateTime,
                        Games = betGroups.Select(e => new GameResolutionView
                        {
                            GameType = e.game.GameType,

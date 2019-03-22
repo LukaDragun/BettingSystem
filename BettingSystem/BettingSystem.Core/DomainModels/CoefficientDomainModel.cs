@@ -7,17 +7,9 @@ namespace BettingSystem.Core.DomainModels
     {
         public CoefficientDomainModel()
         {
-
         }
 
         public BetType BetType { get; set; }
         public float CoefficientValue { get; set; }
-
-
-        private void ErrorCheck()
-        {
-            if (CoefficientValue <= 1)
-            throw new Exception("Invalid coefficient value.");
-        }
     }
 }

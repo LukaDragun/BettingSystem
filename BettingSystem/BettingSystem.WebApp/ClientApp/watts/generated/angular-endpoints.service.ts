@@ -19,6 +19,24 @@ export class AngularEndpointsService {
             });
         };
     
+        this.Bet.GetBets = (args?: Endpoints.Bet.IGetBets): Endpoints.Bet.IGetBetsWithCall => {
+            var endpoint = new Endpoints.Bet.GetBets(args);
+            return _.extend(endpoint, {
+                call<TView>() {
+                    return AngularEndpointsService.call<TView>(http, this, null);
+                }
+            });
+        };
+    
+        this.Bet.GetBet = (args: Endpoints.Bet.IGetBet): Endpoints.Bet.IGetBetWithCall => {
+            var endpoint = new Endpoints.Bet.GetBet(args);
+            return _.extend(endpoint, {
+                call<TView>() {
+                    return AngularEndpointsService.call<TView>(http, this, null);
+                }
+            });
+        };
+    
         this.Game.GetAllGames = (args?: Endpoints.Game.IGetAllGames): Endpoints.Game.IGetAllGamesWithCall => {
             var endpoint = new Endpoints.Game.GetAllGames(args);
             return _.extend(endpoint, {

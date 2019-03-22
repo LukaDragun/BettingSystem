@@ -33,6 +33,8 @@ export namespace Endpoints {
     export namespace Bet {
         export interface IBetService {
             PlaceBet: (args?: IPlaceBet) => IPlaceBetWithCall
+            GetBets: (args?: IGetBets) => IGetBetsWithCall
+            GetBet: (args?: IGetBet) => IGetBetWithCall
         }
     
         export interface IPlaceBet {
@@ -54,7 +56,53 @@ export namespace Endpoints {
         });
     
         PlaceBet.prototype.toString = function(): string {
-            return `api/bet/placeBet`;
+            return `api/bet`;
+        }
+    
+        export interface IGetBets {
+        }
+    
+        export interface IGetBetsEndpoint extends IGetBets, IEndpoint {
+        }
+    
+        export interface IGetBetsCtor {
+            new(args?: IGetBets): IGetBetsEndpoint
+        }
+    
+        export interface IGetBetsWithCall extends IGetBets, IEndpoint {
+            call<TView>(): Promise<TView>;
+        }
+    
+        export var GetBets : IGetBetsCtor = <any>(function(args?: IGetBets) {
+            this._verb = 'GET';
+        });
+    
+        GetBets.prototype.toString = function(): string {
+            return `api/bet`;
+        }
+    
+        export interface IGetBet {
+            betId: number;
+        }
+    
+        export interface IGetBetEndpoint extends IGetBet, IEndpoint {
+        }
+    
+        export interface IGetBetCtor {
+            new(args?: IGetBet): IGetBetEndpoint
+        }
+    
+        export interface IGetBetWithCall extends IGetBet, IEndpoint {
+            call<TView>(): Promise<TView>;
+        }
+    
+        export var GetBet : IGetBetCtor = <any>(function(args?: IGetBet) {
+            this._verb = 'GET';
+            this.betId = args != null ? args.betId : null;
+        });
+    
+        GetBet.prototype.toString = function(): string {
+            return `api/bet/${this.betId}`;
         }
     }
 

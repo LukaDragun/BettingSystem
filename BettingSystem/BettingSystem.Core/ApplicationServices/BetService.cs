@@ -12,20 +12,49 @@ namespace BettingSystem.Core.ApplicationServices
 {
     public class BetService
     {
-
+        private static readonly int MIN_BET_VALUE = 5;
         private readonly IBetRepository betRepository;
         private readonly IBetQuery betQuery;
+        private readonly IGameQuery gameQuery;
+        private readonly IWalletTransactionQuery walletTransactionQuery;
         private readonly WalletTransactionService walletTransactionService;
 
-        public BetService(IBetRepository betRepository, IBetQuery betQuery, WalletTransactionService walletTransactionService)
+        public BetService(IBetRepository betRepository, IBetQuery betQuery, IGameQuery gameQuery, IWalletTransactionQuery walletTransactionQuery, WalletTransactionService walletTransactionService)
         {
             this.betRepository = betRepository;
             this.betQuery = betQuery;
+            this.gameQuery = gameQuery;
+            this.walletTransactionQuery = walletTransactionQuery;
             this.walletTransactionService = walletTransactionService;
         }
 
         public void PlaceBet(BetDto dto)
         {
+            var offer = gameQuery.AsGameOfferView();
+            var bestOffersCoefficients = offer.BestOffers.SelectMany(e => e.Coefficients).Where(e => dto.CoefficientIds.Contains(e.Id));
+            var allOffersCoefficients = offer.OtherOffers.SelectMany(e => e.Coefficients).Concat(bestOffersCoefficients).Where(e => dto.CoefficientIds.Contains(e.Id));
+
+            if(allOffersCoefficients.Count() == 0)
+            {
+                throw new Exception("At least one current offer coefficient needs to be selected.");
+            }
+
+            if(allOffersCoefficients.GroupBy(x => x.GameId).Any(g => g.Count() > 1))
+            {
+                throw new Exception("There can only be one coefficient selected per offered game in a bet.");
+            }
+
+            if (bestOffersCoefficients.Count() > 2)
+            {
+                throw new Exception("There can only be one special offer coefficient selected per bet.");
+            }
+
+            var totalFunds = walletTransactionQuery.AsTotalFundsView(includeTransactions: false);
+
+            if(MIN_BET_VALUE >= dto.BetValue || dto.BetValue >= totalFunds.TotalFunds)
+            {
+                throw new Exception("You can only bet if you have sufficient funds (minimum: "+ MIN_BET_VALUE + ")");
+            }
 
             var bet = new BetDomainModel{
                 Coefficients = betRepository.GetCoefficientsForBet(dto.CoefficientIds)
@@ -68,7 +97,7 @@ namespace BettingSystem.Core.ApplicationServices
 
         private float CalculateProfit(BetView bet)
         {
-            return bet.BetValue * bet.Games.Select(e => e.CoefficientValue).Aggregate((float)1.0, (x, y) => x * y);
+            return bet.BetValue * (float)Math.Round(bet.Games.Select(e => e.CoefficientValue).Aggregate((decimal)1.0, (x, y) => x * (decimal)y),2);
         }
 
     }

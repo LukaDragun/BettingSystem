@@ -22,7 +22,7 @@ namespace BettingSystem.Hangfire
 
         private static void SetupHangfireJobs(GameService gameService)
         {
-            RecurringJob.AddOrUpdate(() => gameService.GenerateAndResolveGames(), Cron.Hourly);
+            RecurringJob.AddOrUpdate("GenerateAndResolveGames", () => gameService.GenerateAndResolveGames(), Cron.Hourly);
         }
     }
 }

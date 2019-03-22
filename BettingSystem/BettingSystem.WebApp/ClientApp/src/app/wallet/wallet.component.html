@@ -11,9 +11,10 @@
   <tbody>
     <ng-container>
       <tr *ngFor="let transaction of funds.transactions;">
-        <th scope="row"> {{transaction.dateTimeUpdated | date : "MM/dd/yyyy hh:mm"}}</th>
+        <td scope="row"> {{transaction.dateTimeUpdated | date : "MM/dd/yyyy hh:mm"}}</td>
         <td>{{transaction.transactionValue}}</td>
-        <td>{{transactionTypes[transaction.transactionType]}}</td>
+        <td *ngIf="!!transaction.betId"><a [routerLink]='["/bets", transaction.betId]'>{{transactionTypes[transaction.transactionType]}}</a></td>
+        <td *ngIf="!transaction.betId">{{transactionTypes[transaction.transactionType]}}</td>
       </tr>
     </ng-container>
 

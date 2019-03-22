@@ -8,6 +8,7 @@ export namespace Interfaces {
     export interface IBetView {
         id: number;
         games: Interfaces.IGameResolutionView[];
+        createdDateTime: string;
         isResolved: boolean;
         betValue: number;
         isResolvable: boolean;
@@ -28,6 +29,7 @@ export namespace Interfaces {
 
     export interface ICoefficientView {
         id: number;
+        gameId: number;
         betType: Enums.BetType;
         coefficientValue: number;
     }

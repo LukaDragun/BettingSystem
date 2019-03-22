@@ -1,0 +1,55 @@
+<h1>Bet Details</h1>
+
+<table *ngIf="bet" class="table text-center mt-5">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Bet Created Time</th>
+      <th scope="col">Bet Value</th>
+      <th scope="col">Bet Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container>
+      <tr>
+        <td scope="row"> {{bet.createdDateTime | date : "MM/dd/yyyy hh:mm"}}</td>
+        <td>{{bet.betValue}}</td>
+        <td><h5><span class="badge badge-pill" [ngClass]="bet.isResolved ?  (isGuessed(bet) ? 'badge-success' : 'badge-danger') : 'badge-secondary'">{{bet.isResolved ? (isGuessed(bet) ? 'Won' : 'Lost') : 'Pending'}}</span></h5></td>
+      </tr>
+    </ng-container>
+
+  </tbody>
+</table>
+
+<table *ngIf="bet" class="table text-center mt-5">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Time Starting</th>
+      <th scope="col">Sport Type</th>
+      <th scope="col">Game</th>
+      <th scope="col">Bet Type</th>
+      <th scope="col">Bet Coefficient</th>
+      <th scope="col">Result</th>
+      <th scope="col">Time Played</th>
+      <th scope="col">Guessed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let game of bet.games; index as i;">
+      <td scope="row">{{game.dateTimeStarting | date : "MM/dd/yyyy hh:mm"}}</td>
+      <td>{{gameTypes[game.gameType]}}</td>
+      <th>{{game.firstTeamName}} - {{game.secondTeamName}}</th>
+      <td>{{getBetTypeName(game.betType)}}</td>
+      <td>{{game.coefficientValue}}</td>
+      <ng-container *ngIf="!!game.dateTimePlayed">
+        <td>{{game.firstTeamScore}} - {{game.secondTeamScore}}</td>
+        <td>{{game.dateTimePlayed | date : "MM/dd/yyyy hh:mm"}}</td>
+        <td><h5><span class="badge badge-pill" [ngClass]="game.isGuessed ? 'badge-success' : 'badge-danger'"><i class="fas" [ngClass]="game.isGuessed ? 'fa-check' : 'fa-times'"></i></span></h5></td>
+      </ng-container>
+      <ng-container *ngIf="!game.dateTimePlayed">
+        <td>/</td>
+        <td>/</td>
+        <td>/</td>
+      </ng-container>
+    </tr>
+  </tbody>
+</table>

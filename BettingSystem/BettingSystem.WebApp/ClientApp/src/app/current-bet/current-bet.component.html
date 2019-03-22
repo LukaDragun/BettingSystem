@@ -10,8 +10,8 @@
   </thead>
   <tbody *ngIf="!!selectedCoefficients.length">
     <tr *ngFor="let bet of selectedCoefficients; index as i;">
-      <th scope="row"> {{bet.gameType}}</th>
-      <td>{{bet.firstTeamName}} - {{bet.secondTeamName}}</td>
+      <td scope="row"> {{bet.gameType}}</td>
+      <th>{{bet.firstTeamName}} - {{bet.secondTeamName}}</th>
       <td>{{getBetTypeName(bet.betType)}}</td>
       <td>{{bet.coefficientValue}}</td>
       <td><button class="btn btn-link text-danger" type="button" (click)="removeCoefficient()">X</button></td>
@@ -30,9 +30,10 @@
 
 <div class="row mt-5">
   <div class="col-6">
-    <span>Bet Value :</span>
-    <ng5-slider *ngIf="!!options" [(value)]="betValue" [options]="options"></ng5-slider>
+    <span>Bet Value (min: {{minBetValue}}):</span>
+    <ng5-slider *ngIf="!!options && options.ceil >= 5" [(value)]="betValue" [options]="options"></ng5-slider>
+    <div *ngIf="!!options && options.ceil < 5"><b>Not enough funds to place bet. Consider depositing some.</b></div>
   </div>
-  <div class="col-6"><button type="button" [disabled]="!selectedCoefficients.length" (click)="placeBet()" class="mt-4 offset-3 col-9 btn btn-success">Place Bet</button></div>
+  <div class="col-6"><button type="button" [disabled]="!selectedCoefficients.length || (!!options && options.ceil < minBetValue)" (click)="placeBet()" class="mt-4 offset-3 col-9 btn btn-success">Place Bet</button></div>
 </div>
 

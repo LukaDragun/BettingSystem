@@ -48,6 +48,7 @@ namespace BettingSystem.Infrastructure.Queries
                                       select new CoefficientView
                                       {
                                           Id = coefficient.Id,
+                                          GameId = game.Id,
                                           BetType = coefficient.BetType,
                                           CoefficientValue = coefficient.CoefficientValue
                                       }).ToList()

@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
 import { SportHandlerComponent } from './sport-handler/sport-handler.component';
 import { AngularEndpointsService } from '../../watts/generated/angular-endpoints.service';
 import { EnumToArrayPipe } from './pipes/enumToArray.pipe';
@@ -14,6 +13,8 @@ import { CurrentBetService } from './current-bet/current-bet.service';
 import { CurrentBetComponent } from './current-bet/current-bet.component';
 import { Ng5SliderModule } from 'ng5-slider';
 import { WalletComponent } from './wallet/wallet.component';
+import { BetListComponent } from './bet-list/bet-list.component';
+import { BetDetailsComponent } from './bet-details/bet-details.component';
 
 @NgModule({
   declarations: [
@@ -21,10 +22,11 @@ import { WalletComponent } from './wallet/wallet.component';
     NavMenuComponent,
     EnumToArrayPipe,
     HomeComponent,
-    CounterComponent,
     WalletComponent,
     SportHandlerComponent,
-    CurrentBetComponent
+    CurrentBetComponent,
+    BetListComponent,
+    BetDetailsComponent
   ],
   imports: [
     Ng5SliderModule,
@@ -36,8 +38,8 @@ import { WalletComponent } from './wallet/wallet.component';
       { path: 'sport/:sportName', component: SportHandlerComponent },
       { path: 'current-bet', component: CurrentBetComponent },
       { path: 'wallet', component: WalletComponent },
-      { path: 'bets', component: CounterComponent, pathMatch: 'full' },
-      { path: 'bets/:betId', component: CounterComponent },
+      { path: 'bets', component: BetListComponent, pathMatch: 'full' },
+      { path: 'bets/:betId', component: BetDetailsComponent },
     ])
   ],
   providers: [AngularEndpointsService, CurrentBetService],

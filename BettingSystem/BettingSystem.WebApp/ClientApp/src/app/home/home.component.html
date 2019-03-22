@@ -1,1 +1,14 @@
 <h1>WELCOME TO BETTING SYSTEM</h1>
+
+<h5>Choose your sport and place a bet:</h5>
+<div class="row">
+    <a [routerLinkActive]='["active"]' [routerLink]='["sport/football"]'>
+      <div class="border border-info col-3">Football <i class="far fa-futbol"></i></div>
+    </a>
+    <a [routerLinkActive]='["active"]' [routerLink]='["sport/basketball"]'>
+      <div class="border border-info col-3 offset-1">Basketball <i class="fas fa-basketball-ball"></i></div>
+    </a>
+    <a [routerLinkActive]='["active"]' [routerLink]='["sport/handball"]'>
+    <div class="border border-info col-3 offset-1">Handball <i class="far fa-hand-rock"></i></div>
+    </a>
+</div>

@@ -11,7 +11,8 @@ import { Options } from 'ng5-slider';
 })
 export class CurrentBetComponent {
 
-  betValue: number = 1;
+  minBetValue: number = 5;
+  betValue: number = this.minBetValue;
   options: Options = null
 
   public selectedCoefficients: IBetCoefficientView[];
@@ -19,14 +20,7 @@ export class CurrentBetComponent {
   constructor(public currentBetService: CurrentBetService, public endpointsService: AngularEndpointsService) {
     this.selectedCoefficients = this.currentBetService.currentBets;
 
-    console.log(this.selectedCoefficients);
-
-    endpointsService.Wallet.GetTotalFunds({ includeTransactions: false }).call<Interfaces.ITotalFundsView>().then((data) => {
-      this.options = {
-        floor: 1,
-        ceil: data.totalFunds
-      };
-    })
+    this.reloadFunds();
   }
 
   public removeCoefficient = (index: number) => this.selectedCoefficients.splice(index, 1);
@@ -35,7 +29,7 @@ export class CurrentBetComponent {
   public reloadFunds = () => {
     this.endpointsService.Wallet.GetTotalFunds({ includeTransactions: false }).call<Interfaces.ITotalFundsView>().then((data) => {
       this.options = {
-        floor: 1,
+        floor: this.minBetValue,
         ceil: data.totalFunds
       };
     });
@@ -51,7 +45,7 @@ export class CurrentBetComponent {
 
     this.endpointsService.Bet.PlaceBet().call<boolean>(dto).then((data) => {
       this.reloadFunds();
-      this.betValue = 1;
+      this.betValue = this.minBetValue;
       this.selectedCoefficients.splice(0, this.selectedCoefficients.length);
     })
 
