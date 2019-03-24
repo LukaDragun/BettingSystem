@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BettingSystem.Infrastructure.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class FullDatabaseScript : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,8 @@ namespace BettingSystem.Infrastructure.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CreatedDateTime = table.Column<DateTime>(nullable: false),
-                    UpdatedDateTime = table.Column<DateTime>(nullable: false)
+                    UpdatedDateTime = table.Column<DateTime>(nullable: false),
+                    IsResolved = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -33,6 +34,8 @@ namespace BettingSystem.Infrastructure.Migrations
                     GameType = table.Column<int>(nullable: false),
                     FirstTeamName = table.Column<string>(nullable: true),
                     SecondTeamName = table.Column<string>(nullable: true),
+                    FirstTeamScore = table.Column<int>(nullable: true),
+                    SecondTeamScore = table.Column<int>(nullable: true),
                     DateTimeStarting = table.Column<DateTime>(nullable: false),
                     DateTimePlayed = table.Column<DateTime>(nullable: true)
                 },
@@ -111,6 +114,53 @@ namespace BettingSystem.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Bets",
+                columns: new[] { "Id", "CreatedDateTime", "IsResolved", "UpdatedDateTime" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2019, 3, 24, 13, 50, 3, 387, DateTimeKind.Local), false, new DateTime(2019, 3, 24, 13, 50, 3, 387, DateTimeKind.Local) },
+                    { 2, new DateTime(2019, 3, 24, 13, 50, 3, 387, DateTimeKind.Local), false, new DateTime(2019, 3, 24, 13, 50, 3, 387, DateTimeKind.Local) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Games",
+                columns: new[] { "Id", "CreatedDateTime", "DateTimePlayed", "DateTimeStarting", "FirstTeamName", "FirstTeamScore", "GameType", "SecondTeamName", "SecondTeamScore", "UpdatedDateTime" },
+                values: new object[] { 1, new DateTime(2019, 3, 24, 13, 50, 3, 386, DateTimeKind.Local), new DateTime(2019, 3, 24, 14, 50, 3, 386, DateTimeKind.Local), new DateTime(2019, 3, 24, 13, 50, 3, 386, DateTimeKind.Local), "KK. Split", 1, 2, "KK. Trogir", 2, new DateTime(2019, 3, 24, 13, 50, 3, 386, DateTimeKind.Local) });
+
+            migrationBuilder.InsertData(
+                table: "WalletTransactions",
+                columns: new[] { "Id", "BetId", "CreatedDateTime", "TransactionType", "TransactionValue", "UpdatedDateTime" },
+                values: new object[] { 1, null, new DateTime(2019, 3, 24, 13, 50, 3, 382, DateTimeKind.Local), 1, 500f, new DateTime(2019, 3, 24, 13, 50, 3, 385, DateTimeKind.Local) });
+
+            migrationBuilder.InsertData(
+                table: "Coefficients",
+                columns: new[] { "Id", "BetType", "CoefficientValue", "CreatedDateTime", "GameId", "UpdatedDateTime" },
+                values: new object[,]
+                {
+                    { 1, 1, 2.3f, new DateTime(2019, 3, 24, 13, 50, 3, 387, DateTimeKind.Local), 1, new DateTime(2019, 3, 24, 13, 50, 3, 387, DateTimeKind.Local) },
+                    { 2, 5, 1.5f, new DateTime(2019, 3, 24, 13, 50, 3, 387, DateTimeKind.Local), 1, new DateTime(2019, 3, 24, 13, 50, 3, 387, DateTimeKind.Local) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "WalletTransactions",
+                columns: new[] { "Id", "BetId", "CreatedDateTime", "TransactionType", "TransactionValue", "UpdatedDateTime" },
+                values: new object[,]
+                {
+                    { 2, 1, new DateTime(2019, 3, 24, 13, 50, 3, 386, DateTimeKind.Local), 2, -220f, new DateTime(2019, 3, 24, 13, 50, 3, 386, DateTimeKind.Local) },
+                    { 3, 2, new DateTime(2019, 3, 24, 13, 50, 3, 386, DateTimeKind.Local), 2, -210f, new DateTime(2019, 3, 24, 13, 50, 3, 386, DateTimeKind.Local) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "BetCoefficient",
+                columns: new[] { "BetId", "CoefficientId" },
+                values: new object[] { 1, 1 });
+
+            migrationBuilder.InsertData(
+                table: "BetCoefficient",
+                columns: new[] { "BetId", "CoefficientId" },
+                values: new object[] { 2, 2 });
+
             migrationBuilder.CreateIndex(
                 name: "IX_BetCoefficient_CoefficientId",
                 table: "BetCoefficient",
@@ -124,9 +174,7 @@ namespace BettingSystem.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_WalletTransactions_BetId",
                 table: "WalletTransactions",
-                column: "BetId",
-                unique: true,
-                filter: "[BetId] IS NOT NULL");
+                column: "BetId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

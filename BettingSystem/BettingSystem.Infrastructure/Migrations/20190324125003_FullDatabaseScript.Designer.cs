@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BettingSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(BettingSystemDatabaseContext))]
-    [Migration("20190206135727_AddTeamScore")]
-    partial class AddTeamScore
+    [Migration("20190324125003_FullDatabaseScript")]
+    partial class FullDatabaseScript
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -29,11 +29,18 @@ namespace BettingSystem.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedDateTime");
 
+                    b.Property<bool>("IsResolved");
+
                     b.Property<DateTime>("UpdatedDateTime");
 
                     b.HasKey("Id");
 
                     b.ToTable("Bets");
+
+                    b.HasData(
+                        new { Id = 1, CreatedDateTime = new DateTime(2019, 3, 24, 13, 50, 3, 387, DateTimeKind.Local), IsResolved = false, UpdatedDateTime = new DateTime(2019, 3, 24, 13, 50, 3, 387, DateTimeKind.Local) },
+                        new { Id = 2, CreatedDateTime = new DateTime(2019, 3, 24, 13, 50, 3, 387, DateTimeKind.Local), IsResolved = false, UpdatedDateTime = new DateTime(2019, 3, 24, 13, 50, 3, 387, DateTimeKind.Local) }
+                    );
                 });
 
             modelBuilder.Entity("BettingSystem.Infrastructure.Entities.BetCoefficient", b =>
@@ -47,6 +54,11 @@ namespace BettingSystem.Infrastructure.Migrations
                     b.HasIndex("CoefficientId");
 
                     b.ToTable("BetCoefficient");
+
+                    b.HasData(
+                        new { BetId = 1, CoefficientId = 1 },
+                        new { BetId = 2, CoefficientId = 2 }
+                    );
                 });
 
             modelBuilder.Entity("BettingSystem.Infrastructure.Entities.Coefficient", b =>
@@ -61,8 +73,7 @@ namespace BettingSystem.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedDateTime");
 
-                    b.Property<int?>("GameId")
-                        .IsRequired();
+                    b.Property<int>("GameId");
 
                     b.Property<DateTime>("UpdatedDateTime");
 
@@ -71,6 +82,11 @@ namespace BettingSystem.Infrastructure.Migrations
                     b.HasIndex("GameId");
 
                     b.ToTable("Coefficients");
+
+                    b.HasData(
+                        new { Id = 1, BetType = 1, CoefficientValue = 2.3f, CreatedDateTime = new DateTime(2019, 3, 24, 13, 50, 3, 387, DateTimeKind.Local), GameId = 1, UpdatedDateTime = new DateTime(2019, 3, 24, 13, 50, 3, 387, DateTimeKind.Local) },
+                        new { Id = 2, BetType = 5, CoefficientValue = 1.5f, CreatedDateTime = new DateTime(2019, 3, 24, 13, 50, 3, 387, DateTimeKind.Local), GameId = 1, UpdatedDateTime = new DateTime(2019, 3, 24, 13, 50, 3, 387, DateTimeKind.Local) }
+                    );
                 });
 
             modelBuilder.Entity("BettingSystem.Infrastructure.Entities.Game", b =>
@@ -100,6 +116,10 @@ namespace BettingSystem.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Games");
+
+                    b.HasData(
+                        new { Id = 1, CreatedDateTime = new DateTime(2019, 3, 24, 13, 50, 3, 386, DateTimeKind.Local), DateTimePlayed = new DateTime(2019, 3, 24, 14, 50, 3, 386, DateTimeKind.Local), DateTimeStarting = new DateTime(2019, 3, 24, 13, 50, 3, 386, DateTimeKind.Local), FirstTeamName = "KK. Split", FirstTeamScore = 1, GameType = 2, SecondTeamName = "KK. Trogir", SecondTeamScore = 2, UpdatedDateTime = new DateTime(2019, 3, 24, 13, 50, 3, 386, DateTimeKind.Local) }
+                    );
                 });
 
             modelBuilder.Entity("BettingSystem.Infrastructure.Entities.WalletTransaction", b =>
@@ -120,11 +140,15 @@ namespace BettingSystem.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BetId")
-                        .IsUnique()
-                        .HasFilter("[BetId] IS NOT NULL");
+                    b.HasIndex("BetId");
 
                     b.ToTable("WalletTransactions");
+
+                    b.HasData(
+                        new { Id = 1, CreatedDateTime = new DateTime(2019, 3, 24, 13, 50, 3, 382, DateTimeKind.Local), TransactionType = 1, TransactionValue = 500f, UpdatedDateTime = new DateTime(2019, 3, 24, 13, 50, 3, 385, DateTimeKind.Local) },
+                        new { Id = 2, BetId = 1, CreatedDateTime = new DateTime(2019, 3, 24, 13, 50, 3, 386, DateTimeKind.Local), TransactionType = 2, TransactionValue = -220f, UpdatedDateTime = new DateTime(2019, 3, 24, 13, 50, 3, 386, DateTimeKind.Local) },
+                        new { Id = 3, BetId = 2, CreatedDateTime = new DateTime(2019, 3, 24, 13, 50, 3, 386, DateTimeKind.Local), TransactionType = 2, TransactionValue = -210f, UpdatedDateTime = new DateTime(2019, 3, 24, 13, 50, 3, 386, DateTimeKind.Local) }
+                    );
                 });
 
             modelBuilder.Entity("BettingSystem.Infrastructure.Entities.BetCoefficient", b =>
@@ -151,8 +175,8 @@ namespace BettingSystem.Infrastructure.Migrations
             modelBuilder.Entity("BettingSystem.Infrastructure.Entities.WalletTransaction", b =>
                 {
                     b.HasOne("BettingSystem.Infrastructure.Entities.Bet", "Bet")
-                        .WithOne("Transaction")
-                        .HasForeignKey("BettingSystem.Infrastructure.Entities.WalletTransaction", "BetId");
+                        .WithMany("Transactions")
+                        .HasForeignKey("BetId");
                 });
 #pragma warning restore 612, 618
         }
