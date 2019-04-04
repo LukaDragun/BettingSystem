@@ -10,7 +10,6 @@ namespace BettingSystem.Core.DomainModels
         public GameDomainModel()
         {
             Coefficients = new List<CoefficientDomainModel>();
-            ErrorCheck();
         }
 
         public GameType GameType { get; set; }
@@ -39,7 +38,7 @@ namespace BettingSystem.Core.DomainModels
             ErrorCheck();
         }
 
-        private void ErrorCheck()
+        public void ErrorCheck()
         {
             if(!DateTimePlayed.HasValue && (FirstTeamScore.HasValue || SecondTeamScore.HasValue))
             throw new Exception("Cannot change score before game is played");

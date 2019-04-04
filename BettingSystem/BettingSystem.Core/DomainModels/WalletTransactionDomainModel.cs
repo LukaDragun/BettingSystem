@@ -9,13 +9,19 @@ namespace BettingSystem.Core.DomainModels
     {
         public WalletTransactionDomainModel()
         {
-            ErrorCheck();
         }
 
         public float TransactionValue { get; set; }
         public TransactionType TransactionType { get; set; }
 
         public BetDomainModel Bet { get; set; }
+
+        public void AddDeposit(float value)
+        {
+            TransactionType = TransactionType.Deposit;
+            TransactionValue = value;
+            ErrorCheck();
+        }
 
         public void AddBetWithValue(BetDomainModel bet, float value)
         {
@@ -34,7 +40,7 @@ namespace BettingSystem.Core.DomainModels
             ErrorCheck();
         }
 
-        private void ErrorCheck()
+        public void ErrorCheck()
         {
             if ((TransactionType == TransactionType.Win || TransactionType == TransactionType.Deposit) && TransactionValue <= 0)
                 throw new Exception("Transaction cannot be zero or negative for Deposit or Win");

@@ -67,12 +67,7 @@ namespace BettingSystem.Core.DataGenerators
             var coefficients = Enum.GetValues(typeof(BetType)).Cast<int>().ToList().OrderBy(x => rand.Next()).ToArray();
             for (var i = 0; i < numberOfCoefficients; i++)
             {
-                var coefficient = new CoefficientDomainModel
-                {
-                    BetType = (BetType)coefficients[i],
-                    CoefficientValue = (float)(rand.Next(1, 3) + Math.Round(rand.NextDouble(), 2))
-                };
-
+                var coefficient = new CoefficientDomainModel((BetType)coefficients[i], (float)(rand.Next(1, 3) + Math.Round(rand.NextDouble(), 2)));
                 items.Add(coefficient);
             }
 

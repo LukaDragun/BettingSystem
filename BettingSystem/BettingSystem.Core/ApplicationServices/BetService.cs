@@ -97,7 +97,7 @@ namespace BettingSystem.Core.ApplicationServices
 
         private float CalculateProfit(BetView bet)
         {
-            return bet.BetValue * (float)Math.Round(bet.Games.Select(e => e.CoefficientValue).Aggregate((decimal)1.0, (x, y) => x * (decimal)y),2);
+            return bet.BetValue * (float)Math.Round(bet.Games.Select(e => e.CoefficientValue).Aggregate((decimal)0.95, (x, y) => x * (decimal)y),2);
         }
 
     }

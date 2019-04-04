@@ -20,10 +20,9 @@ namespace BettingSystem.Core.ApplicationServices
 
         public int AddFunds(int value)
         {
-            var transaction = new WalletTransactionDomainModel{
-                TransactionType = TransactionType.Deposit,
-                TransactionValue = value
-            };
+            var transaction = new WalletTransactionDomainModel();
+
+            transaction.AddDeposit(value);
 
             return walletTransactionRepository.Create(transaction);
         }
